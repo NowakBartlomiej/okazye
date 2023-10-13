@@ -1,7 +1,12 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
+import { useAuth } from '@/hooks/useAuth'
 
 const Head = () => {
+    const { user, logout } = useAuth({ middleware: 'guest' })
+
     return (
         <div className='bg-white flex justify-between px-6 py-4'>
             <Link href="/">
@@ -19,8 +24,18 @@ const Head = () => {
                 </div>
 
                 <div className='text-base flex items-center gap-4'>
-                    <Link href='/login' className='text-gray-700 hover:text-purple-700'>Zaloguj Się</Link>
-                    <Link href='/register' className='text-gray-700 border border-gray-300 hover:border-gray-400 rounded px-4 py-2'>Utórz Konto</Link>
+                    {user ? (
+                        <>
+                            <span onClick={logout} className='text-gray-700 hover:text-purple-700 cursor-pointer'>Wyloguj</span>
+                            <Link href='/' className='text-gray-700 border border-gray-300 hover:border-gray-400 rounded px-4 py-2'>Home</Link>
+                        </>
+                    ) :
+                        <>
+                            <Link href='/login' className='text-gray-700 hover:text-purple-700'>Zaloguj Się</Link>
+                            <Link href='/register' className='text-gray-700 border border-gray-300 hover:border-gray-400 rounded px-4 py-2'>Utórz Konto</Link>
+                        </>
+                    }
+
                 </div>
             </div>
         </div>
