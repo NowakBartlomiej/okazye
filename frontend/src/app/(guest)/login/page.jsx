@@ -1,13 +1,15 @@
 'use client'
 
 import { useAuth } from "@/hooks/useAuth";
+import { Button, Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation"
 import { useState } from "react";
+import InputError from "@/components/inputError";
 
 const Page = () => {
   const router = useRouter();
 
-  const { login } = useAuth({
+  const { login, isLoading } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/',
   })
@@ -36,44 +38,32 @@ const Page = () => {
         <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 my-6">Zaloguj się</h2>
         <form onSubmit={submitForm} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900">Email</label>
-            <div className="mt-2">
-              <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" required autoFocus className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-700 sm:text-sm sm:leading-6" />
-            </div>
+            <Input 
+            classNames={{ 
+              label: "",
+              input: "text-black",
+             }}
+            isInvalid={errors.email ? true : false}
+            errorMessage={errors.email && "Błędne dane"}
+            type="email" label="Email" variant="bordered" isRequired={true} value={email} onChange={(e) => setEmail(e.target.value)}/>
           </div>
 
           <div>
-            <div className="flex items-center justify-between">
-              <label className="block text-sm font-medium leading-6 text-gray-900">Hasło</label>
+            <div className="flex justify-end">
               <div className="text-sm">
-                <a href="#" className="font-semibold text-violet-700 hover:text-violet-500">Zapomiałeś hasła?</a>
+                <a href="#" className="font-semibold text-[#28B67E] hover:text-[#28b67dd2]">Zapomiałeś hasła?</a>
               </div>
             </div>
             <div className="mt-2">
-              <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" required autoFocus className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-600 sm:text-sm sm:leading-6" />
+              <Input
+              isInvalid={errors.password ? true : false}
+              errorMessage={errors.password && "Błędne dane"}
+              type="password" label="Hasło" variant="bordered" isRequired={true} value={password} onChange={(e) => setPassword(e.target.value)}/>
             </div>
           </div>
 
-          <div className="block mt-4">
-            <label
-              htmlFor="remember_me"
-              className="inline-flex items-center">
-              <input
-                onChange={(e) => setShouldRemember(e.target.value)}
-                id="remember_me"
-                type="checkbox"
-                name="remember"
-                className="rounded border-gray-300 text-violet-700 shadow-sm focus:border-violet-400 focus:ring focus:ring-violet-200  focus:ring-opacity-50"
-              />
-
-              <span className="ml-2 text-sm text-gray-600">
-                Zapamiętaj mnie
-              </span>
-            </label>
-          </div>
-
           <div>
-            <button type="submit" className="flex w-full justify-center rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-700">Zaloguj Się</button>
+            <Button isLoading={isLoading} type="submit" className="flex w-full justify-center rounded-md bg-[#28B67E] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#28b67de0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#28b67de0]">Zaloguj się</Button>
           </div>
         </form>
       </div>

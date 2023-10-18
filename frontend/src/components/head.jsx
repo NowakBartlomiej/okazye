@@ -77,7 +77,7 @@ const Head = () => {
                         <>
                         <NavbarMenuItem className='text-white'>
                             <Link
-                                className="w-full hover:text-[#28B67E] focus:text-[#28B67E] transition-colors"
+                                className="w-full text-[#28B67E] hover:text-[#28b67dd2] focus:text-[#28b67dd2] transition-colors"
                                 href="/register"
                                 onClick={() => setIsMenuOpen(false)}
                             >
@@ -89,7 +89,7 @@ const Head = () => {
                         <>
                             <NavbarMenuItem>
                             <Link
-                                className="w-full hover:text-[#28B67E] focus:text-[#28B67E] transition-colors"
+                                className="w-full text-[#28B67E] hover:text-[#28b67dd2] focus:text-[#28b67dd2] transition-colors"
                                 href="/register"
                                 onClick={() => setIsMenuOpen(false)}
                             >

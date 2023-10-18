@@ -1,10 +1,11 @@
 import useSWR from "swr";
 import axios from "@/lib/axios";
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false);
 
     const { data: user, error, mutate } = useSWR('/api/user', () =>
         axios
@@ -21,7 +22,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     const register = async ({ setErrors, ...props }) => {
         await csrf()
-
+        setIsLoading(true)
         setErrors([])
 
         axios
@@ -31,10 +32,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 if (error.response.status !== 422) throw error
 
                 setErrors(error.response.data.errors)
+                setIsLoading(false)
             })
+        setIsLoading(false)
     }
 
     const login = async ({ setErrors, setStatus, ...props }) => {
+        await setIsLoading(true)
         await csrf()
 
         setErrors([])
@@ -47,7 +51,9 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 if (error.response.status !== 422) throw error
 
                 setErrors(error.response.data.errors)
+                setIsLoading(false)
             })
+        setIsLoading(false)
     }
 
     const forgotPassword = async ({ setErrors, setStatus, email }) => {
@@ -91,10 +97,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const logout = async () => {
+        setIsLoading(true)
         if (!error) {
             await axios.post('/logout').then(() => mutate())
+            setIsLoading(false)
         }
-
+        setIsLoading(false)
         window.location.pathname = '/login'
     }
 
@@ -117,5 +125,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         resetPassword,
         resendEmailVerification,
         logout,
+        isLoading,
     }
 }
