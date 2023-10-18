@@ -34,7 +34,7 @@ const Page = () => {
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm bg-white px-6 py-4 rounded-md pb-6">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm bg-white px-6 py-4 rounded-md pb-6 animate-fade-in-down">
         <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 my-6">Zaloguj się</h2>
         <form onSubmit={submitForm} className="space-y-6">
           <div>
