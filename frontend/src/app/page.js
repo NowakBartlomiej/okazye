@@ -10,6 +10,7 @@ export default function Home() {
       {user && (
         <h1>Zalogowany</h1>
       )}
+      <h1>Test</h1>
     </main>
   )
 }
