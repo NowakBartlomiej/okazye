@@ -6,7 +6,7 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, NavbarMenuToggl
 import { SearchIcon } from '@/icons/searchIcon';
 import { useState } from 'react'
 
-const Head = () => {
+const Navigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const { user, logout } = useAuth({ middleware: 'guest' })
 
@@ -16,6 +16,7 @@ const Head = () => {
             onMenuOpenChange={setIsMenuOpen}
             maxWidth='2xl'
             className='bg-[#0D1321]'
+            position='static'
         >
             <NavbarContent className="sm:hidden text-white" justify="start">
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
@@ -102,4 +103,4 @@ const Head = () => {
     )
 }
 
-export default Head
+export default Navigation

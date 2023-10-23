@@ -1,5 +1,6 @@
 'use client'
 
+import OccasionList from "@/components/occasionList"
 import { useAuth } from "@hooks/useAuth"
 
 export default function Home() {
@@ -7,10 +8,7 @@ export default function Home() {
   
   return (
     <main>
-      {user && (
-        <h1>Zalogowany</h1>
-      )}
-      <h1>Test</h1>
+      <OccasionList />
     </main>
   )
 }
