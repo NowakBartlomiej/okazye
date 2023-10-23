@@ -4,7 +4,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button, Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation"
 import { useState } from "react";
-import InputError from "@/components/inputError";
 
 const Page = () => {
   const router = useRouter();

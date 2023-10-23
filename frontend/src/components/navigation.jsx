@@ -48,7 +48,7 @@ const Navigation = () => {
                 {user ? (
                     <>
                         <Button className='bg-[#28B67E] text-white rounded hover:bg-[#28b67dd2] hidden lg:flex'>
-                            <Link href='/'>Dodaj okazję</Link>
+                            <Link href='/dodaj-okazje'>Dodaj okazję</Link>
                         </Button>
                         <Button className='bg-[#28B67E] text-white rounded hover:bg-[#28b67dd2]'>
                             <Link onClick={logout} href='/'>Konto</Link>
@@ -79,7 +79,7 @@ const Navigation = () => {
                         <NavbarMenuItem className='text-white'>
                             <Link
                                 className="w-full text-[#28B67E] hover:text-[#28b67dd2] focus:text-[#28b67dd2] transition-colors"
-                                href="/register"
+                                href="/dodaj-okazje"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Dodaj Okazję
