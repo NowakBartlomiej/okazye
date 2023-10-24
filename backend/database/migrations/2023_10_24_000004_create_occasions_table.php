@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
             // Comment
-            $table->unsignedBigInteger('comment_id');
+            $table->unsignedBigInteger('comment_id')->nullable();
             $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
 
             // User
