@@ -20,7 +20,7 @@ class OccasionFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->title(10),
+            'title' => $this->faker->text(10),
             'description' => $this->faker->text(50),
             'new_price' => $this->faker->numberBetween(1, 100),
             'old_price'	=> $this->faker->numberBetween(101, 120),
