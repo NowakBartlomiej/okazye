@@ -1,12 +1,17 @@
 'use client'
 
 import { NextUIProvider } from "@nextui-org/system"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
-const Providers = ({children}) => {
+const queryClient = new QueryClient();
+
+const Providers = ({ children }) => {
   return (
-    <NextUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextUIProvider>
         {children}
-    </NextUIProvider>
+      </NextUIProvider>
+    </QueryClientProvider>
   )
 }
 
