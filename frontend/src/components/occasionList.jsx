@@ -1,9 +1,11 @@
-import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/react'
 import React from 'react'
 import OccassionCard from './occassionCard'
-import {BsFillPlugFill, BsEyeFill} from 'react-icons/bs'
+import { BsFillPlugFill, BsEyeFill } from 'react-icons/bs'
+import {getOccasions} from '@api/fetchOccasions'
 
 const OccasionList = () => {
+    const {data, isLoading} = getOccasions();
+    
     return (
         <div>
             <div className='bg-white text-custom-gray-100 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold flex justify-center py-4 mb-8'>
@@ -43,22 +45,36 @@ const OccasionList = () => {
                                 </div>
                                 <BsEyeFill />
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>
                 <div className=' md:col-span-8 lg:col-span-9 xl:col-span-6'>
-                    <OccassionCard />
-                    <OccassionCard />
+                    {isLoading
+                        ? (
+                            <h1>Loading...</h1>
+                        )
+                        : (
+                            data?.data.map((occasion) => (
+                                <OccassionCard 
+                                    key={occasion.id}
+                                    categoryName={occasion.category.name}
+                                    description={occasion.description}
+                                    newPrice={occasion.newPrice}
+                                    oldPrice={occasion.oldPrice}
+                                    rating={occasion.rating}
+                                    title={occasion.title}
+                                    url={occasion.url}
+                                    userName={occasion.user.name}
+                                />
+                                // console.log(occasion.category.name)
+                            ))
+                        )
+                    }
                 </div>
-                
-                
+
+
             </div>
-
-
-            {/* <OccassionCard />
-            <OccassionCard /> */}
-            
         </div>
     )
 }

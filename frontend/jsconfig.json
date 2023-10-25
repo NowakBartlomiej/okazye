@@ -8,6 +8,7 @@
       "@styles/*": ["./src/styles/*"],
       "@providers/*": ["./src/providers/*"],
       "@icons/*": ["./src/icons/*"],
+      "@api/*": ["./src/app/api/*"],
     }
   }
 }
