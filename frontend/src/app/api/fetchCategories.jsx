@@ -1,12 +1,12 @@
 import fetchAxios from "@/lib/fetchAxios"
 import { useQuery } from '@tanstack/react-query';
 
-export const getOccasions = () => {
+export const getCategories = () => {
     return useQuery({
-        queryKey: ['occasions'],
+        queryKey: ['categories'],
         queryFn: async () => {
             const result = await fetchAxios
-            .get('occasions')
+            .get('categories')
             .catch((error) => {
                 throw new Error(error);
               });
@@ -14,10 +14,4 @@ export const getOccasions = () => {
             return result.data;
         }
     })
-}
-
-export const createOccasions = (occasion) => {
-    fetchAxios.post('/occasions', occasion).catch((error) => {
-        throw new Error(error);
-    });
 }

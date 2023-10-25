@@ -28,10 +28,10 @@ class OccasionController extends Controller
 
         $occasion->title = $request->input('title');
         $occasion->description = $request->input('description');
-        $occasion->new_price = $request->input('new_price');
-        $occasion->old_price = $request->input('old_price');
+        $occasion->new_price = $request->input('newPrice');
+        $occasion->old_price = $request->input('oldPrice');
         $occasion->url = $request->input('url');
-        $occasion->category_id = $request->input('category_id');
+        $occasion->category_id = $request->input('categoryId');
         $occasion->user_id = Auth::user()->id;
 
         $occasion->save();
@@ -55,10 +55,10 @@ class OccasionController extends Controller
         $occasion->title = $request->input('title');
         $occasion->title = $request->input('title');
         $occasion->description = $request->input('description');
-        $occasion->new_price = $request->input('new_price');
-        $occasion->old_price = $request->input('old_price');
+        $occasion->new_price = $request->input('newPrice');
+        $occasion->old_price = $request->input('oldPrice');
         $occasion->url = $request->input('url');
-        $occasion->category_id = $request->input('category_id');
+        $occasion->category_id = $request->input('categoryId');
         $occasion->user_id = Auth::user()->id;
 
         $occasion->save();
