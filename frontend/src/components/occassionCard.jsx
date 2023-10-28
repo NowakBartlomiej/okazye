@@ -6,7 +6,7 @@ import Link from 'next/link'
 const OccassionCard = ({title, description, categoryName, newPrice, oldPrice, rating, url, userName}) => {
     return (
         <div className=' mb-5 grid place-items-center'>
-            <Card className="p-3">
+            <Card className="p-3 w-9/12">
                 <div className='flex gap-4'>
                     <Image
                         alt="Card background"
@@ -25,7 +25,7 @@ const OccassionCard = ({title, description, categoryName, newPrice, oldPrice, ra
                         </div>
 
                         <div>
-                            <h2 className='text-[26px] font-bold break-normal max-w-[150px]'>{title}</h2>
+                            <h2 className='text-[26px] font-bold break-normal'>{title}</h2>
                             <div className='flex gap-16 text-[20px] font-semibold items-center'>
                                 <div className='flex gap-2'>
                                     <h3 className='text-custom-green-100'>{newPrice} zł</h3>
@@ -40,7 +40,7 @@ const OccassionCard = ({title, description, categoryName, newPrice, oldPrice, ra
                     </div>
                 </div>
 
-                <div className='max-w-[600px] mt-3'>
+                <div className=' mt-3'>
                     <p className='break-words text-base'>{description}</p>
                 </div>
 

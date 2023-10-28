@@ -19,6 +19,10 @@ class OccasionController extends Controller
         return OccasionResource::collection(Occasion::all());
     }
 
+    public function latest() {
+        return OccasionResource::collection(Occasion::latest()->get());
+    }
+
     /**
      * Store a newly created resource in storage.
      */

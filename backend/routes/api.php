@@ -21,4 +21,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/occasions', OccasionController::class);
+Route::get('/latest-occasions', [OccasionController::class, 'latest']);
+
 Route::apiResource('/categories', CategoryController::class);
