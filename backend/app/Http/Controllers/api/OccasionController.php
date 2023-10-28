@@ -23,6 +23,10 @@ class OccasionController extends Controller
         return OccasionResource::collection(Occasion::latest()->get());
     }
 
+    public function mostPopular() {
+        return OccasionResource::collection(Occasion::get()->sortByDesc('rating'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
