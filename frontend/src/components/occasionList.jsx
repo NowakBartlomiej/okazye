@@ -19,8 +19,8 @@ const OccasionList = () => {
 
 
             <div className='grid md:grid-cols-12 gap-6 mx-5 md:mx-4'>
-                <div className=' md:col-span-4 lg:col-span-3'>
-                    <div className='bg-white p-3 rounded-2xl'>
+                <div className=' md:col-span-4 lg:col-span-3 '>
+                    <div className='bg-white p-3 rounded-2xl sticky top-10'>
                         <h2 className='text-custom-green-600 text-2xl font-semibold mb-3'>Kategorie</h2>
 
                         <ul className=' flex flex-col gap-3'>

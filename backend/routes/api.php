@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\FollowerController;
 use App\Http\Controllers\api\OccasionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,5 @@ Route::get('/latest-occasions', [OccasionController::class, 'latest']);
 Route::get('/most-popular-occasions', [OccasionController::class, 'mostPopular']);
 
 Route::apiResource('/categories', CategoryController::class);
+
+Route::post('/follow-unfollow-user', [FollowerController::class, 'followUnfollow']);

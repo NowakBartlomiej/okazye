@@ -47,4 +47,18 @@ class User extends Authenticatable
     public function occasions() {
         return $this->hasMany(Occasion::class);
     }
+
+
+    // follower_id = our_id
+    // user_id = followed persons id
+
+    // who we are followings
+    public function followings() {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id')->withTimestamps();
+    }
+
+    // people following us
+    public function followers() {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id')->withTimestamps();
+    }
 }
