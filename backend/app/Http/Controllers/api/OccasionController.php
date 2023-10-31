@@ -16,15 +16,15 @@ class OccasionController extends Controller
      */
     public function index()
     {
-        return OccasionResource::collection(Occasion::all());
+        return OccasionResource::collection(Occasion::paginate(5));
     }
 
     public function latest() {
-        return OccasionResource::collection(Occasion::latest()->get());
+        return OccasionResource::collection(Occasion::latest()->paginate(5));
     }
 
     public function mostPopular() {
-        return OccasionResource::collection(Occasion::get()->sortByDesc('rating'));
+        return OccasionResource::collection(Occasion::orderBy('rating', 'desc')->paginate(5));
     }
 
     /**
