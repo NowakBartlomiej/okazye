@@ -23,8 +23,8 @@ const OccasionList = () => {
                 <div className='lg:w-1/4 '>
                     <div className='bg-gray-400 hidden'>Rekalama</div>
                 </div>
-                <div className='bg-green-200 w-full grid lg:w-full'>
-                    <div>
+                <div className=' w-full lg:w-full grid lg:place-items-center'>
+                    
                         {isLoading
                             ? (
                                 <h1>Loading...</h1>
@@ -45,7 +45,8 @@ const OccasionList = () => {
                                 ))
                             )
                         }
-                    </div>
+                        
+                    
                 </div>
                 <div className=' lg:w-1/4 mb-6 border-b-3 border-gray-200 pb-4 lg:pb-0 lg:border-0'>
                     <div className='lg:sticky lg:top-2 p-3 rounded-2xl bg-white mx-3 sm:mx-5 md:mx-8 lg:mx-2'>
