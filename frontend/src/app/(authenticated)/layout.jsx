@@ -1,5 +1,6 @@
 'use client'
 
+import Navigation from '@/components/navigation';
 import {useAuth} from '@hooks/useAuth'
 
 const AuthLayout = ({children}) => {

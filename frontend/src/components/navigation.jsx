@@ -51,7 +51,7 @@ const Navigation = () => {
                             <Link href='/dodaj-okazje'>Dodaj okazję</Link>
                         </Button>
                         <Button className='bg-[#28B67E] text-white rounded hover:bg-[#28b67dd2]'>
-                            <Link onClick={logout} href='/'>Konto</Link>
+                            <Link href='/profil'>Konto</Link>
                         </Button>
                     </>
                 )

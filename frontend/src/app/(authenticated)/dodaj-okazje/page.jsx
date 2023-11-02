@@ -1,10 +1,14 @@
+import Navigation from "@/components/navigation"
 import OccasionForm from "@/components/occasionForm"
 
 const Page = () => {
   return (
-    <main className='flex items-center justify-center mt-6'>
+    <>
+      <Navigation />
+      <main className='flex items-center justify-center mt-6'>
         <OccasionForm />
-    </main>
+      </main>
+    </>
   )
 }
 

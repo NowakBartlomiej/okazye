@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <html lang="en" className='min-h-screen bg-gray-100'>
         <body className={`${nunito.className} `}>
           <Providers>
-            <Navigation />
+            {/* <Navigation /> */}
             {children}
           </Providers>
         </body>
