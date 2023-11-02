@@ -45,17 +45,18 @@ const OccasionList = () => {
                     >
                         <>
                             {occasions && occasions.map((occasion, index) => (
-                                <OccassionCard
-                                    key={index}
-                                    categoryName={occasion.category.name}
-                                    description={occasion.description}
-                                    newPrice={occasion.newPrice}
-                                    oldPrice={occasion.oldPrice}
-                                    rating={occasion.rating}
-                                    title={occasion.title}
-                                    url={occasion.url}
-                                    userName={occasion.user.name}
-                                />
+                                    <OccassionCard
+                                        occasionId={occasion.id}
+                                        key={index}
+                                        categoryName={occasion.category.name}
+                                        description={occasion.description}
+                                        newPrice={occasion.newPrice}
+                                        oldPrice={occasion.oldPrice}
+                                        rating={occasion.rating}
+                                        title={occasion.title}
+                                        url={occasion.url}
+                                        userName={occasion.user.name}
+                                    />
                             ))}
                         </>
                     </InfiniteScroll>

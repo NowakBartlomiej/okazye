@@ -7,6 +7,21 @@ export const createOccasions = (occasion) => {
     });
 }
 
+export const getOccasion = (occasionId) => {
+    return useQuery({
+        queryKey: ['occasion'],
+        queryFn: async () => {
+            const result = await fetchAxios
+            .get(`occasions/${occasionId}`)
+            .catch((error) => {
+                throw new Error(error);
+              });
+        
+            return result.data;
+        }
+    })
+} 
+
 export const getOccasions = (pageParam = 1) => {
     return useQuery({
         queryKey: ['occasions'],

@@ -90,7 +90,7 @@ const SkeletonCard = ({ cards }) => {
                                 <div className='bg-custom-light-gray-200 text-black text-base font-medium flex justify-between items-center px-3 py-2 rounded-xl'>
                                     <div className='flex gap-1 items-center'>
                                         <BsFillHouseDoorFill size={20} />
-                                        <p>rara</p>
+                                        <p>Kategoria</p>
                                     </div>
                                     <BsEyeFill size={20} />
                                 </div>

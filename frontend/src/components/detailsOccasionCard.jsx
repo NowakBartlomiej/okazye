@@ -1,15 +1,12 @@
-import { useRouter } from 'next/navigation'
 import React from 'react'
-import { Card, CardHeader, CardBody, Image, Button } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Image, Button, Avatar } from "@nextui-org/react";
 import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill } from 'react-icons/bs'
 import Link from 'next/link'
 
-const OccassionCard = ({occasionId, title, description, categoryName, newPrice, oldPrice, rating, url, userName }) => {
-    const router = useRouter()
+const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, url, userName }) => {
     return (
-        <div onClick={() => router.push(`/okazja/${occasionId}`)} className='lg:w-9/12 mb-3 mx-3 sm:mx-5 md:mx-8 lg:mx-2 cursor-pointer'>
         <Card
-            className="border-none bg-white "
+            className="border-none bg-white lg:w-9/12 mb-3 mx-3 sm:mx-5 md:mx-8 lg:mx-2"
             shadow="sm"
         >
             <CardBody>
@@ -40,38 +37,43 @@ const OccassionCard = ({occasionId, title, description, categoryName, newPrice, 
 
                         <div className="flex flex-col mt-3 gap-1">
 
-                            <h2 className="text-[32px] font-bold">{title}</h2>
+                            <h2 className="text-[40px] font-bold">{title}</h2>
 
                             <div className='text-[22px] font-semibold flex items-center justify-between'>
                                 <div className='flex items-center gap-3'>
-                                    <h3 className='text-custom-green-100'>{newPrice} zł</h3>
-                                    <h3 className='text-custom-light-gray-500 line-through'>{oldPrice} zł</h3>
+                                    <h3 className='text-custom-green-100 text-3xl font-semibold'>{newPrice} zł</h3>
+                                    <h3 className='text-custom-light-gray-500 text-3xl font-semibold line-through'>{oldPrice} zł</h3>
                                 </div>
-                                <div className='bg-custom-green-100 text-white rounded-2xl px-1.5 py-1'>
+                                <div className='bg-custom-green-100 text-3xl font-semibold text-white rounded-2xl px-2.5 py-1.5'>
                                     <p>{Math.floor(((oldPrice - newPrice) / oldPrice) * 100)}%</p>
                                 </div>
                             </div>
 
-                            <small className='text-custom-light-gray-500 text-base'>Najniższa cena z 30 dni {newPrice} zł</small>
+                            <small className='text-custom-light-gray-500 text-lg'>Najniższa cena z 30 dni {newPrice} zł</small>
+                            <div className='flex justify-center'>
+                                <Button startContent={<BsBoxArrowUpRight size={26} />} className='w-[70%] bg-custom-green-400 text-white text-2xl font-semibold py-7'>
+                                    <Link target='_blank' href={url}>Pzekieruj do okazji</Link>
+                                </Button>
+                            </div>
 
                         </div>
                     </div>
                 </div>
 
-                <div className=' mt-3'>
-                    <p className='text-lg'>{description}</p>
-                </div>
-
-                <div className='flex justify-between mt-3'>
-                    <div className='flex flex-col justify-end'>
-                        <h2 className='bg-custom-green-100 px-2 py-1 text-white rounded-xl text-base'>Od: {userName}</h2>
+                <div className='flex justify-between items-center mt-3'>
+                    <div className='flex gap-4'>
+                        <Avatar size='lg' className='border-4 border-custom-green-100' />
+                        <div>
+                            <p className='text-xl font-normal'>Okazję dodał:</p>
+                            <div className='flex items-center gap-3'>
+                                <p className='text-xl font-bold'>{userName}</p>
+                                <BsEyeFill size={20} />
+                            </div>
+                        </div>
                     </div>
 
-                    <div className='flex flex-col gap-2'>
-                        <Button startContent={<BsBoxArrowUpRight size={20} />} className='bg-custom-green-400 text-white text-[16px] font-medium'>
-                            <Link target='_blank' href={url}>Pzekieruj do okazji</Link>
-                        </Button>
-                        <div className='bg-custom-light-gray-200 text-black text-base font-medium flex justify-between items-center px-3 py-2 rounded-xl'>
+                    <div className='flex mt-4'>
+                        <div className='bg-custom-light-gray-200 w-48 text-black text-base font-medium flex justify-between items-center px-3 py-2 rounded-xl'>
                             <div className='flex gap-1 items-center'>
                                 <BsFillHouseDoorFill size={20} />
                                 <p>{categoryName}</p>
@@ -82,8 +84,7 @@ const OccassionCard = ({occasionId, title, description, categoryName, newPrice, 
                 </div>
             </CardBody>
         </Card>
-        </div>
     )
 }
 
-export default OccassionCard
+export default DetailsOccasionCard
