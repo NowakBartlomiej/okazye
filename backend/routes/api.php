@@ -25,6 +25,8 @@ Route::apiResource('/occasions', OccasionController::class);
 Route::get('/latest-occasions', [OccasionController::class, 'latest']);
 Route::get('/most-popular-occasions', [OccasionController::class, 'mostPopular']);
 
+Route::get('/occasions-by-category/{categoryId}', [OccasionController::class, 'occasionsByCategory']);
+
 Route::apiResource('/categories', CategoryController::class);
 
 Route::post('/follow-unfollow-user', [FollowerController::class, 'followUnfollow']);

@@ -27,6 +27,10 @@ class OccasionController extends Controller
         return OccasionResource::collection(Occasion::orderBy('rating', 'desc')->paginate(5));
     }
 
+    public function occasionsByCategory($categoryId) {
+        return OccasionResource::collection(Occasion::where('category_id', $categoryId)->orderBy('rating', 'desc')->paginate(5));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
