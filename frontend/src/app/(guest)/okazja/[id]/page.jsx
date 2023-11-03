@@ -8,9 +8,11 @@ import MiniOccasionCard from '@/components/miniOccasionCard';
 import CommentInput from '@/components/commentInput';
 import Comment from '@/components/comment';
 import SkeletonDetailsOccasionCard from '@/components/skeletonDetailsOccasionCard';
+import { useAuth } from '@/hooks/useAuth';
 
 const Page = ({ params }) => {
     const { data, isFetching } = getOccasion(params.id);
+    const {user} = useAuth();
     
     return (
         <div className='flex flex-col-reverse lg:flex-row mt-8'>
@@ -71,8 +73,9 @@ const Page = ({ params }) => {
                 <Card className='lg:w-9/12 mb-3 mx-3 sm:mx-5 md:mx-8 lg:mx-2 bg-white'>
                     <CardBody className='flex gap-4'>
                         <h2 className='text-3xl font-bold'>Dyskusja</h2>
-                        <CommentInput />
-
+                        
+                        {user && <CommentInput />}
+                        
                         <Comment />
                         <Comment />
                         <Comment />
