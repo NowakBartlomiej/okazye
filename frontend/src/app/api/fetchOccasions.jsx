@@ -50,7 +50,8 @@ export const getInfiniteOccasions = (slug) => {
             return result.data;
         },
         refetchOnWindowFocus: false,
-        enabled: false,
+        refetchOnMount: false,
+        staleTime: 2 * (60 * 1000),
         getNextPageParam: (lastPage) => (lastPage.links.next == null ? undefined : lastPage.meta.current_page + 1)
     })
 }
