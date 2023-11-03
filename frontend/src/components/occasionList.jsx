@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import OccassionCard from './occassionCard'
 import { BsFillPlugFill, BsEyeFill } from 'react-icons/bs'
@@ -6,11 +8,13 @@ import { getCategories } from '@/app/api/fetchCategories'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import SkeletonCard from './skeletonCard'
 import { Skeleton } from '@nextui-org/react'
+import { useRouter } from 'next/navigation'
 
-const OccasionList = () => {
+const OccasionList = ({occasionFilter}) => {
+    const router = useRouter();
     const { data: categories, isLoading: categoriesLoading } = getCategories();
 
-    const {data, fetchNextPage, hasNextPage, isLoading} = getInfiniteOccasions();
+    const {data, fetchNextPage, hasNextPage, isLoading, refetch, isFetching} = getInfiniteOccasions(occasionFilter);
 
     const occasions = data?.pages.reduce((acc, page) => {
         return [...acc, ...page.data]
@@ -20,10 +24,10 @@ const OccasionList = () => {
         <div>
             <div className='bg-white text-custom-gray-100 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold flex justify-center py-4 mb-6'>
                 <div className=' flex flex-wrap justify-center gap-6 px-5 md:gap-10 lg:gap-14 xl:gap-18'>
-                    <span className='hover:text-custom-green-100 transition-colors cursor-pointer'>Nowe</span>
-                    <span className='hover:text-custom-green-100 transition-colors cursor-pointer'>Najpopularniejsze</span>
-                    <span className='hover:text-custom-green-100 transition-colors cursor-pointer'>Dla mnie</span>
-                    <span className='hover:text-custom-green-100 transition-colors cursor-pointer'>Obserwowani</span>
+                    <span onClick={() => router.push('/nowe')} className={`hover:text-custom-green-100 transition-colors cursor-pointer ${occasionFilter == "latest-occasions" && 'text-custom-green-100'}`}>Nowe</span>
+                    <span onClick={() => router.push('/najpopularniejsze')} className={`hover:text-custom-green-100 transition-colors cursor-pointer ${occasionFilter == "most-popular-occasions" && 'text-custom-green-100'}`}>Najpopularniejsze</span>
+                    <span onClick={() => console.log("Dla mnie")} className='hover:text-custom-green-100 transition-colors cursor-pointer'>Dla mnie</span>
+                    <span onClick={() => console.log("Obserwowani")} className='hover:text-custom-green-100 transition-colors cursor-pointer'>Obserwowani</span>
                 </div>
             </div>
 
@@ -33,10 +37,9 @@ const OccasionList = () => {
                 </div>
                 <div className=' w-full lg:w-full grid lg:place-items-center'>
                     
-                    {isLoading && <SkeletonCard cards={5}/>}
+                    {isFetching && <SkeletonCard cards={5}/>}
                     
-
-                    <InfiniteScroll 
+                    {!isFetching && <InfiniteScroll 
                         dataLength={occasions ? occasions.length : 0}
                         next={() => fetchNextPage()}
                         hasMore={hasNextPage}
@@ -59,7 +62,8 @@ const OccasionList = () => {
                                     />
                             ))}
                         </>
-                    </InfiniteScroll>
+                    </InfiniteScroll> }
+                    
                 </div>
                 <div className=' lg:w-1/4 mb-6 border-b-3 border-gray-200 pb-4 lg:pb-0 lg:border-0'>
                     <div className='lg:sticky lg:top-2 p-3 rounded-2xl bg-white mx-3 sm:mx-5 md:mx-8 lg:mx-2'>

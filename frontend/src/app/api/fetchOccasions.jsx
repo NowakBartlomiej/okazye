@@ -37,18 +37,20 @@ export const getOccasions = (pageParam = 1) => {
     })
 }
 
-export const getInfiniteOccasions = () => {
+export const getInfiniteOccasions = (slug) => {
     return useInfiniteQuery({
-        queryKey: ['infOccasions'],
+        queryKey: ['infOccasions', slug],
         queryFn: async ({pageParam = 1}) => {
             const result = await fetchAxios
-            .get(`occasions?page=${pageParam}`)
+            .get(`${slug}?page=${pageParam}`)
             .catch((error) => {
                 throw new Error(error);
               });
         
             return result.data;
         },
+        refetchOnWindowFocus: false,
+        enabled: false,
         getNextPageParam: (lastPage) => (lastPage.links.next == null ? undefined : lastPage.meta.current_page + 1)
     })
 }
