@@ -10,7 +10,7 @@ import Comment from '@/components/comment';
 import SkeletonDetailsOccasionCard from '@/components/skeletonDetailsOccasionCard';
 
 const Page = ({ params }) => {
-    const { data, isLoading } = getOccasion(params.id);
+    const { data, isFetching } = getOccasion(params.id);
     
     return (
         <div className='flex flex-col-reverse lg:flex-row mt-8'>
@@ -19,8 +19,8 @@ const Page = ({ params }) => {
             </div>
 
             <div className=' w-full lg:w-full grid lg:place-items-center gap-4'>
-                {isLoading && <SkeletonDetailsOccasionCard />}
-                {!isLoading &&
+                {isFetching && <SkeletonDetailsOccasionCard />}
+                {!isFetching &&
                     <DetailsOccasionCard
                         categoryName={data.category.name}
                         newPrice={data.newPrice}
@@ -32,7 +32,7 @@ const Page = ({ params }) => {
                     />
                 }
 
-                {isLoading ? (
+                {isFetching ? (
                     <Card className='lg:w-9/12 mb-3 mx-3 sm:mx-5 md:mx-8 lg:mx-2 bg-white'>
                         <CardBody className='flex gap-2'>
 
