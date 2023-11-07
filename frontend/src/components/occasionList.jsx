@@ -2,18 +2,15 @@
 
 import React from 'react'
 import OccassionCard from './occassionCard'
-import { BsFillPlugFill, BsEyeFill } from 'react-icons/bs'
 import { getInfiniteOccasions } from '@api/fetchOccasions'
-import { getCategories } from '@/app/api/fetchCategories'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import SkeletonCard from './skeletonCard'
-import { Skeleton } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
+import CategoryList from './categoryList'
 
 const OccasionList = ({occasionFilter}) => {
     const router = useRouter();
-    const { data: categories, isLoading: categoriesLoading } = getCategories();
-
+    
     const {data, fetchNextPage, hasNextPage, isLoading, refetch, isFetching} = getInfiniteOccasions(occasionFilter);
 
     const occasions = data?.pages.reduce((acc, page) => {
@@ -65,38 +62,8 @@ const OccasionList = ({occasionFilter}) => {
                     </InfiniteScroll> }
                     
                 </div>
-                <div className=' lg:w-1/4 mb-6 border-b-3 border-gray-200 pb-4 lg:pb-0 lg:border-0'>
-                    <div className='lg:sticky lg:top-2 p-3 rounded-2xl bg-white mx-3 sm:mx-5 md:mx-8 lg:mx-2'>
-                        <h2 className='text-custom-green-600 text-xl font-semibold mb-3'>Kategorie</h2>
-                        <ul className=' grid grid-cols-2 gap-3 sm:grid-cols-3  lg:flex lg:flex-col'>
-                            {categoriesLoading
-                                ? (
-                                   
-                                        <Skeleton className='rounded-lg'>
-                                            <li className='bg-custom-light-gray-200 text-custom-green-600 rounded-lg px-4 py-3 text-lg font-medium flex items-center justify-between gap-2'>
-                                                <div className='flex items-center gap-2'>
-                                                    <BsFillPlugFill />
-                                                    <p>Kategoria</p>
-                                                </div>
-                                                <BsEyeFill />
-                                            </li>
-                                        </Skeleton>
-                                   
-                                )
-                                : (
-                                    categories?.data.map((category) => (
-                                        <li key={category.id} className='bg-custom-light-gray-200 text-custom-green-600 rounded-lg px-4 py-3 text-lg font-medium flex items-center justify-between gap-2'>
-                                            <div className='flex items-center gap-2'>
-                                                <BsFillPlugFill />
-                                                <p>{category.name}</p>
-                                            </div>
-                                            <BsEyeFill />
-                                        </li>
-                                    ))
-                                )
-                            }
-                        </ul>
-                    </div>
+                <div className='lg:w-1/4 mb-6 border-b-3 border-gray-200 pb-4 lg:pb-0 lg:border-0'>
+                    <CategoryList />
                 </div>
             </div>
         </div>

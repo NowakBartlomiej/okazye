@@ -69,7 +69,7 @@ const OccassionCard = ({occasionId, title, description, categoryName, newPrice, 
 
                     <div className='flex flex-col gap-2'>
                         <Button startContent={<BsBoxArrowUpRight size={20} />} className='bg-custom-green-400 text-white text-[16px] font-medium'>
-                            <Link target='_blank' href={url}>Pzekieruj do okazji</Link>
+                            <Link target='_blank' href={url}>Przekieruj do okazji</Link>
                         </Button>
                         <div className='bg-custom-light-gray-200 text-black text-base font-medium flex justify-between items-center px-3 py-2 rounded-xl'>
                             <div className='flex gap-1 items-center'>

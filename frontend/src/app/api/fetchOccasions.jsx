@@ -55,3 +55,22 @@ export const getInfiniteOccasions = (slug) => {
         getNextPageParam: (lastPage) => (lastPage.links.next == null ? undefined : lastPage.meta.current_page + 1)
     })
 }
+
+export const getOccasionsByCategory = (categoryId) => {
+    return useInfiniteQuery({
+        queryKey: ['occasionsByCategory', categoryId],
+        queryFn: async ({pageParam = 1}) => {
+            const result = await fetchAxios
+            .get(`occasions-by-category/${categoryId}?page=${pageParam}`)
+            .catch((error) => {
+                throw new Error(error);
+              });
+        
+            return result.data;
+        },
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        staleTime: 2 * (60 * 1000),
+        getNextPageParam: (lastPage) => (lastPage.links.next == null ? undefined : lastPage.meta.current_page + 1)
+    })
+}

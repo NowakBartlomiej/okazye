@@ -15,3 +15,18 @@ export const getCategories = () => {
         }
     })
 }
+
+export const getCategory = (categoryId) => {
+    return useQuery({
+        queryKey: ['category'],
+        queryFn: async () => {
+            const result = await fetchAxios
+            .get(`categories/${categoryId}`)
+            .catch((error) => {
+                throw new Error(error);
+              });
+        
+            return result.data;
+        }
+    })
+}
