@@ -40,6 +40,13 @@ class OccasionController extends Controller
         return OccasionResource::collection($occasion);
     }
 
+    public function followedOccasions() {
+        $users = DB::table("followers")->where('follower_id', 11)->pluck('user_id')->toArray();
+        $occasion = Occasion::whereIn('user_id', $users)->latest()->paginate(5);
+
+        return OccasionResource::collection($occasion);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

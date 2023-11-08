@@ -29,7 +29,7 @@ const OccasionList = ({ occasionFilter }) => {
                         (
                             <>
                                 <span onClick={() => router.push('/dla-mnie')} className={`hover:text-custom-green-100 transition-colors cursor-pointer ${occasionFilter == "for-me" && 'text-custom-green-100'}`}>Dla mnie</span>
-                                <span onClick={() => console.log("Obserwowani")} className='hover:text-custom-green-100 transition-colors cursor-pointer'>Obserwowani</span>
+                                <span onClick={() => router.push('/obserwowani')} className={`hover:text-custom-green-100 transition-colors cursor-pointer ${occasionFilter == "followed-occasions" && 'text-custom-green-100'}`}>Obserwowani</span>
                             </>
                         )
                     }
