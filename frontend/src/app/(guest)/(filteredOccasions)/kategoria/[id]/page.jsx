@@ -62,6 +62,7 @@ const Page = ({ params }) => {
                   title={occasion.title}
                   url={occasion.url}
                   userName={occasion.user.name}
+                  userId={occasion.user.id}
                 />
               ))}
             </>

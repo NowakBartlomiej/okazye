@@ -1,9 +1,15 @@
 import React from 'react'
 import { Card, CardHeader, CardBody, Image, Button, Avatar } from "@nextui-org/react";
-import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill } from 'react-icons/bs'
+import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 import Link from 'next/link'
+import { useAuth } from '@/hooks/useAuth';
+import { getFollowers, followUnfollowUser } from '@/app/api/followUser';
 
-const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, url, userName }) => {
+const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, url, userName, userId }) => {
+    const { user } = useAuth();
+
+    const { data: followers, isLoading, refetch } = getFollowers();
+
     return (
         <Card
             className="border-none bg-white lg:w-9/12 mb-3 mx-3 sm:mx-5 md:mx-8 lg:mx-2"
@@ -67,7 +73,30 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                             <p className='text-xl font-normal'>Okazję dodał:</p>
                             <div className='flex items-center gap-3'>
                                 <p className='text-xl font-bold'>{userName}</p>
-                                <BsEyeFill size={20} />
+                                {user && (
+                                    !isLoading && (
+                                        followers.find(follower => follower.followerId == user.id && follower.userId == userId)
+                                            ?
+                                            <BsFillEyeSlashFill
+                                                className='cursor-pointer'
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    followUnfollowUser({ userId: userId })
+                                                    refetch()
+                                                }} size={20} />
+                                            :
+                                            <BsEyeFill
+                                                className='cursor-pointer'
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    followUnfollowUser({ userId: userId })
+                                                    refetch()
+                                                }} size={20} />
+                                    )
+                                )}
+
+
+
                             </div>
                         </div>
                     </div>

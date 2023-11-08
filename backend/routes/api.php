@@ -30,3 +30,4 @@ Route::get('/occasions-by-category/{categoryId}', [OccasionController::class, 'o
 Route::apiResource('/categories', CategoryController::class);
 
 Route::post('/follow-unfollow-user', [FollowerController::class, 'followUnfollow']);
+Route::get('/followers', [FollowerController::class, 'index']);

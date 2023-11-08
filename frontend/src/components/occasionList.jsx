@@ -19,8 +19,8 @@ const OccasionList = ({occasionFilter}) => {
 
     return (
         <div>
-            <div className='bg-white text-custom-gray-100 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold flex justify-center py-4 mb-6'>
-                <div className=' flex flex-wrap justify-center gap-6 px-5 md:gap-10 lg:gap-14 xl:gap-18'>
+            <div className='bg-white text-custom-gray-100 text-[19px] sm:text-[22px] lg:text-[24px] font-semibold flex justify-center py-4 mb-6'>
+                <div className=' flex justify-center gap-6 px-5 md:gap-10 lg:gap-14 xl:gap-18'>
                     <span onClick={() => router.push('/nowe')} className={`hover:text-custom-green-100 transition-colors cursor-pointer ${occasionFilter == "latest-occasions" && 'text-custom-green-100'}`}>Nowe</span>
                     <span onClick={() => router.push('/najpopularniejsze')} className={`hover:text-custom-green-100 transition-colors cursor-pointer ${occasionFilter == "most-popular-occasions" && 'text-custom-green-100'}`}>Najpopularniejsze</span>
                     <span onClick={() => console.log("Dla mnie")} className='hover:text-custom-green-100 transition-colors cursor-pointer'>Dla mnie</span>
@@ -56,6 +56,7 @@ const OccasionList = ({occasionFilter}) => {
                                         title={occasion.title}
                                         url={occasion.url}
                                         userName={occasion.user.name}
+                                        userId={occasion.user.id}
                                     />
                             ))}
                         </>

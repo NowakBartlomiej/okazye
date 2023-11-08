@@ -27,6 +27,8 @@ export const getCategory = (categoryId) => {
               });
         
             return result.data;
-        }
+        },
+        refetchOnWindowFocus: false,
+        
     })
 }

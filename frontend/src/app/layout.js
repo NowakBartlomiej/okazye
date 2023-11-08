@@ -2,6 +2,9 @@ import './globals.css'
 import { Nunito } from 'next/font/google'
 import Providers from '@/providers/providers'
 import Navigation from '@/components/navigation'
+import { ToastContainer } from 'react-toastify'
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const nunito = Nunito({ subsets: ['latin'] })
 
@@ -18,6 +21,7 @@ export default function RootLayout({ children }) {
           <Providers>
             {/* <Navigation /> */}
             {children}
+            <ToastContainer />
           </Providers>
         </body>
       </html>
