@@ -5,9 +5,11 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOccasionRequest;
 use App\Http\Resources\OccasionResource;
+use App\Models\Category;
 use App\Models\Occasion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OccasionController extends Controller
 {
@@ -29,6 +31,13 @@ class OccasionController extends Controller
 
     public function occasionsByCategory($categoryId) {
         return OccasionResource::collection(Occasion::where('category_id', $categoryId)->orderBy('rating', 'desc')->paginate(5));
+    }
+
+    public function forMe() {
+        $categories = DB::table('category_user')->where('user_id', Auth::user()->id)->pluck('category_id')->toArray();
+        $occasion = Occasion::whereIn('category_id', $categories)->latest()->paginate(5);
+
+        return OccasionResource::collection($occasion);
     }
 
     /**
