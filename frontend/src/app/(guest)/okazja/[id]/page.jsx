@@ -32,6 +32,7 @@ const Page = ({ params }) => {
                         url={data.url}
                         userName={data.user.name}
                         userId={data.user.id}
+                        categoryId={data.category.id}
                     />
                 }
 

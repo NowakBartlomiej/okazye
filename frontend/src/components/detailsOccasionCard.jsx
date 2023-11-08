@@ -1,14 +1,16 @@
 import React from 'react'
-import { Card, CardHeader, CardBody, Image, Button, Avatar } from "@nextui-org/react";
+import { Card, CardBody, Image, Button, Avatar } from "@nextui-org/react";
 import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth';
 import { getFollowers, followUnfollowUser } from '@/app/api/followUser';
+import { followUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
 
-const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, url, userName, userId }) => {
+const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, url, userName, userId, categoryId }) => {
     const { user } = useAuth();
 
     const { data: followers, isLoading, refetch } = getFollowers();
+    const { data: categoryFollowers, isLoading: categoryIsLoading, refetch: categoryRefetch } = getCategoryFollowers();
 
     return (
         <Card
@@ -78,7 +80,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                         followers.find(follower => follower.followerId == user.id && follower.userId == userId)
                                             ?
                                             <BsFillEyeSlashFill
-                                                className='cursor-pointer'
+                                                className='cursor-pointer hover:text-slate-700 transition-colors'
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     followUnfollowUser({ userId: userId })
@@ -86,7 +88,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                                 }} size={20} />
                                             :
                                             <BsEyeFill
-                                                className='cursor-pointer'
+                                                className='cursor-pointer hover:text-slate-700 transition-colors'
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     followUnfollowUser({ userId: userId })
@@ -107,7 +109,27 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                 <BsFillHouseDoorFill size={20} />
                                 <p>{categoryName}</p>
                             </div>
-                            <BsEyeFill size={20} />
+                            {user && (
+                                !categoryIsLoading && (
+                                    categoryFollowers.find(categoryFollower => categoryFollower.userId == user.id && categoryFollower.categoryId == categoryId)
+                                        ?
+                                        <BsFillEyeSlashFill
+                                            className='cursor-pointer hover:text-slate-700 transition-colors'
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                followUnfollowCategory({ categoryId: categoryId })
+                                                categoryRefetch()
+                                            }} size={20} />
+                                        :
+                                        <BsEyeFill
+                                            className='cursor-pointer hover:text-slate-700 transition-colors'
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                followUnfollowCategory({ categoryId: categoryId })
+                                                categoryRefetch()
+                                            }} size={20} />
+                                )
+                            )}
                         </div>
                     </div>
                 </div>

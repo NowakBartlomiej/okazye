@@ -31,3 +31,6 @@ Route::apiResource('/categories', CategoryController::class);
 
 Route::post('/follow-unfollow-user', [FollowerController::class, 'followUnfollow']);
 Route::get('/followers', [FollowerController::class, 'index']);
+
+Route::post('/follow-unfollow-category', [CategoryController::class, 'followUnfollowCategory']);
+Route::get('/followed-categories', [CategoryController::class, 'followedCategories']);

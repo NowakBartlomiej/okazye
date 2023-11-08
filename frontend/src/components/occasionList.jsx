@@ -57,6 +57,7 @@ const OccasionList = ({occasionFilter}) => {
                                         url={occasion.url}
                                         userName={occasion.user.name}
                                         userId={occasion.user.id}
+                                        categoryId={occasion.category.id}
                                     />
                             ))}
                         </>

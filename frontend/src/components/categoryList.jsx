@@ -1,13 +1,16 @@
 import { getCategories } from '@/app/api/fetchCategories';
-import { BsFillPlugFill, BsEyeFill } from 'react-icons/bs'
+import { BsFillPlugFill, BsEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
 import { Skeleton } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { ToastContainer, toast } from 'react-toastify';
+import { useAuth } from '@/hooks/useAuth';
+import { followUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
 
 const CategoryList = ({actualCategoryId}) => {
     const router = useRouter();
+    const {user} = useAuth();
     const { data: categories, isLoading: categoriesLoading } = getCategories();
+    const {data: categoryFollowers, isLoading: categoryIsLoading, refetch: categoryRefetch} = getCategoryFollowers();
 
     return (
         <aside className='lg:sticky lg:top-2 p-3 rounded-2xl bg-white mx-3 sm:mx-5 md:mx-8 lg:mx-2'>
@@ -35,7 +38,27 @@ const CategoryList = ({actualCategoryId}) => {
                                     <BsFillPlugFill />
                                     <p>{category.name}</p>
                                 </div>
-                                <BsEyeFill />
+                                {user && (
+                                    !categoryIsLoading && (
+                                        categoryFollowers.find(categoryFollower => categoryFollower.userId == user.id && categoryFollower.categoryId == category.id)
+                                            ?
+                                            <BsFillEyeSlashFill
+                                                className='cursor-pointer hover:text-slate-300 transition-colors'
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    followUnfollowCategory({ categoryId: category.id })
+                                                    categoryRefetch()
+                                                }} size={20} />
+                                            :
+                                            <BsEyeFill
+                                                className='cursor-pointer hover:text-slate-300 transition-colors'
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    followUnfollowCategory({ categoryId: category.id })
+                                                    categoryRefetch()
+                                                }} size={20} />
+                                    )
+                                )}
                             </li>
                         ))
                     )
