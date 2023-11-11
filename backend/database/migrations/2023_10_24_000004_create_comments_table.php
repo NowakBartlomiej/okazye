@@ -13,21 +13,21 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
             
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->unsignedBigInteger('occasion_id');
+            $table->foreign('occasion_id')->references('id')->on('occasions')->onDelete('cascade');
 
-            //Oppurtunity
-            // $table->unsignedBigInteger('opportunity_id');
-            // $table->foreign('opportunity_id')->references('id')->on('opportunities')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->text('content');
 
             //Parent
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('comments');
 
             //Reaction
-            $table->unsignedBigInteger('reaction_id');
+            $table->unsignedBigInteger('reaction_id')->nullable();
             $table->foreign('reaction_id')->references('id')->on('reactions')->onDelete('cascade');
 
             $table->timestamps();

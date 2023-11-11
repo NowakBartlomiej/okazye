@@ -29,7 +29,6 @@ class OccasionFactory extends Factory
             'duration_date' => $this->faker->dateTimeBetween('now', '+1 month'),
             'status' => true,
             'category_id' => Category::select('id')->orderByRaw('RAND()')->first()->id,
-            'comment_id' => null,	
             'user_id' => User::select('id')->orderByRaw('RAND()')->first()->id,
             'created_at' => Carbon::now(),
             'updated_at' => null
