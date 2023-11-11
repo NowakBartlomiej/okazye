@@ -16,4 +16,8 @@ class Comment extends Model
     public function occasion() {
         return $this->belongsTo(Occasion::class);
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

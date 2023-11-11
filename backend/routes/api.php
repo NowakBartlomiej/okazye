@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\CommentController;
 use App\Http\Controllers\api\FollowerController;
 use App\Http\Controllers\api\OccasionController;
 use Illuminate\Http\Request;
@@ -36,3 +37,5 @@ Route::get('/followers', [FollowerController::class, 'index']);
 
 Route::post('/follow-unfollow-category', [CategoryController::class, 'followUnfollowCategory']);
 Route::get('/followed-categories', [CategoryController::class, 'followedCategories']);
+
+Route::apiResource('/comments', CommentController::class);
