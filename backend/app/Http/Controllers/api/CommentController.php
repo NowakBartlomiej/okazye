@@ -14,7 +14,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return CommentResource::collection(Comment::paginate(5));
+        return CommentResource::collection(Comment::all());
     }
 
     /**
@@ -28,9 +28,9 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $occasionId)
     {
-        //
+        return CommentResource::collection(Comment::where('occasion_id', $occasionId)->latest()->paginate(5));
     }
 
     /**
