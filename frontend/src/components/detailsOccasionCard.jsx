@@ -59,7 +59,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
 
                             <small className='text-custom-light-gray-500 text-lg'>Najniższa cena z 30 dni {newPrice} zł</small>
                             <div className='flex justify-center'>
-                                <Button startContent={<BsBoxArrowUpRight size={26} />} className='w-[70%] bg-custom-green-400 text-white text-2xl font-semibold py-7'>
+                                <Button startContent={<BsBoxArrowUpRight size={26} />} className='w-[70%] bg-custom-green-400 hover:bg-[#1d4c4fcc] transition-colors  text-white text-2xl font-semibold py-7'>
                                     <Link target='_blank' href={url}>Pzekieruj do okazji</Link>
                                 </Button>
                             </div>
