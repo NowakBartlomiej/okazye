@@ -101,6 +101,6 @@ class OccasionController extends Controller
     {
         $occasion->delete();
 
-        return response("", 204);
+        return response("Usunięto okazję", 204);
     }
 }

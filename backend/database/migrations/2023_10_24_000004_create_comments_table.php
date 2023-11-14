@@ -31,6 +31,7 @@ return new class extends Migration
             $table->foreign('reaction_id')->references('id')->on('reactions')->onDelete('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
