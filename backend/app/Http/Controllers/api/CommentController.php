@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -52,9 +53,21 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        //
+        $data = $request->validated();
+        
+        if ($comment->update($data)) {
+            return response()->json([
+                'message' => "Edytowano komentarz"
+            ], 201);
+        } else {
+            return response()->json([
+                'message' => "Nie udało się edytować komentarza"
+            ], 500);
+        }
+        
+        // $comment->update($data);
     }
 
     /**
