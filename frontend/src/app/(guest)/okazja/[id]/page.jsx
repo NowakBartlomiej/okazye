@@ -76,7 +76,7 @@ const Page = ({ params }) => {
                     <CardBody className='flex gap-4'>
                         <h2 className='text-3xl font-bold'>Dyskusja</h2>
                         
-                        {user && <CommentInput />}
+                        {user && <CommentInput occasionId={params.id}/>}
                         
                         <Comment />
                         <Comment />
