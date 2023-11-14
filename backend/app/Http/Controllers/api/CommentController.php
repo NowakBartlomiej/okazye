@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -20,9 +22,23 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCommentRequest $storeCommentRequest)
     {
-        //
+        $data = $storeCommentRequest->validated();
+        $data['occasion_id'] = $storeCommentRequest->occasionId;
+        $data['user_id'] = Auth::user()->id;
+        $data['updated_at'] = null;
+
+
+        if (Comment::create($data)) {
+            return response()->json([
+                'message' => "Dodano komentarz"
+            ], 201);
+        } else {
+            return response()->json([
+                'message' => "Nie udało się dodać komentarza"
+            ], 500);
+        }
     }
 
     /**
