@@ -9,6 +9,7 @@ import CommentInput from '@/components/commentInput';
 import Comment from '@/components/comment';
 import SkeletonDetailsOccasionCard from '@/components/skeletonDetailsOccasionCard';
 import { useAuth } from '@/hooks/useAuth';
+import Comments from '@/components/comments';
 
 const Page = ({ params }) => {
     const { data, isFetching } = getOccasion(params.id);
@@ -78,9 +79,7 @@ const Page = ({ params }) => {
                         
                         {user && <CommentInput occasionId={params.id}/>}
                         
-                        <Comment />
-                        <Comment />
-                        <Comment />
+                        <Comments occasionId={params.id}/>
                     </CardBody>
                 </Card>
 

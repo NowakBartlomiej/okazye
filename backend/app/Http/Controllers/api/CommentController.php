@@ -47,7 +47,7 @@ class CommentController extends Controller
      */
     public function show(string $occasionId)
     {
-        return CommentResource::collection(Comment::where('occasion_id', $occasionId)->latest()->paginate(5));
+        return CommentResource::collection(Comment::where('occasion_id', $occasionId)->oldest()->paginate(5));
     }
 
     /**

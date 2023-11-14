@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { IoMdSend } from 'react-icons/io'
 
 const CommentInput = ({ occasionId }) => {
+  const {mutate: addComment} = createComment();
   const [comment, setComment] = useState({
     "content": "",
     "occasionId": occasionId
@@ -12,7 +13,7 @@ const CommentInput = ({ occasionId }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createComment(comment);
+    addComment(comment);
     setComment({...comment, content: ""});
   }
 
