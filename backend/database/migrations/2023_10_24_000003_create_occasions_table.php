@@ -16,8 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->decimal('new_price');
-            $table->decimal('old_price');
+            $table->string('image')->nullable();
+            $table->decimal('new_price')->nullable();
+            $table->decimal('old_price')->nullable();
             $table->string('url');
             $table->integer('rating')->default(0);
             $table->date('duration_date')->default(Carbon::now());
@@ -33,6 +34,7 @@ return new class extends Migration
 
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

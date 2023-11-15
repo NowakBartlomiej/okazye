@@ -13,6 +13,6 @@ class OccasionSeeder extends Seeder
      */
     public function run(): void
     {
-        Occasion::factory()->count(10)->create();
+        Occasion::factory()->count(20)->create();
     }
 }
