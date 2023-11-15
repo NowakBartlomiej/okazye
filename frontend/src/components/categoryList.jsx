@@ -13,7 +13,7 @@ const CategoryList = ({actualCategoryId}) => {
     const {data: categoryFollowers, isLoading: categoryIsLoading, refetch: categoryRefetch} = getCategoryFollowers();
 
     return (
-        <aside className='lg:sticky lg:top-2 p-3 rounded-2xl bg-white mx-3 sm:mx-5 md:mx-8 lg:mx-2'>
+        <aside className='lg:sticky lg:top-[9.2rem] p-3 rounded-2xl bg-white mx-3 sm:mx-5 md:mx-8 lg:mx-2'>
 
             <h2 className='text-custom-green-600 text-xl font-semibold mb-3'>Kategorie</h2>
             <ul className=' grid grid-cols-2 gap-3 sm:grid-cols-3  lg:flex lg:flex-col'>

@@ -16,7 +16,7 @@ const Navigation = () => {
             onMenuOpenChange={setIsMenuOpen}
             maxWidth='2xl'
             className='bg-[#0D1321]'
-            position='static'
+            position='sticky'
         >
             <NavbarContent className="sm:hidden text-white" justify="start">
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />

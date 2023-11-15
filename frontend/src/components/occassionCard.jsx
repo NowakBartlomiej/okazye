@@ -72,7 +72,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                         <p className='text-lg'>{description}</p>
                     </div>
 
-                    <div className='flex justify-between mt-3'>
+                    <div className='flex gap-3 justify-between mt-3'>
                         <Dropdown>
 
                             <div className='flex flex-col justify-end'>

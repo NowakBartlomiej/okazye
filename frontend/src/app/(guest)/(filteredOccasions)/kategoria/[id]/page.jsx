@@ -21,7 +21,7 @@ const Page = ({ params }) => {
 
   return (
     <div>
-      <div className='bg-white text-custom-green-400 text-[20px] sm:text-[22px] lg:text-[24px] tracking-wider font-bold  py-4 mb-6'>
+      <div className='sticky top-[4rem] z-30 shadow-md bg-white text-custom-green-400 text-[20px] sm:text-[22px] lg:text-[24px] tracking-wider font-bold  py-4 mb-6'>
         <div className='flex justify-center'>
           {isFetchingCategory
             ? <Skeleton className='rounded-lg'>
