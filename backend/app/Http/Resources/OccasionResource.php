@@ -20,7 +20,8 @@ class OccasionResource extends JsonResource
         return [
             'id' => $this->id, 	
             'title'	=> $this->title,
-            'description' => $this->description,	
+            'description' => $this->description,
+            'image' => $this->image == null ? 'no-image.png' : $this->image,	
             'newPrice' => $this->new_price,	
             'oldPrice' => $this->old_price,	
             'url' => $this->url,	
@@ -28,7 +29,6 @@ class OccasionResource extends JsonResource
             'durationDate' => $this->duration_date,	
             'status' => $this->status,	
             'category' => $this->category->only(['id', 'name']),	
-            // 'comment_id' => $this->comment_id,	
             'user' => $this->user->only(['id', 'name', 'email']),	
             'createdAt' => $this->created_at->format('Y-m-d H:i:s'),
         ];

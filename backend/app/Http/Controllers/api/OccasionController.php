@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOccasionRequest;
-use App\Http\Resources\OccasionResource;
+use Exception;
 use App\Models\Category;
 use App\Models\Occasion;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\OccasionResource;
+use App\Http\Requests\StoreOccasionRequest;
+use Illuminate\Support\Facades\Storage;
 
 class OccasionController extends Controller
 {
@@ -50,21 +53,40 @@ class OccasionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreOccasionRequest $request)
     {
-        $occasion = new Occasion();
+        try {
+            if ($request->hasFile('image')) {
+                $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
+                Storage::disk('public')->put($imageName, file_get_contents($request->image));
+            }
+            
+            $occasion = Occasion::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'image' => $request->hasFile('image') ? $imageName : null,
+                'new_price' => $request->newPrice,
+                'old_price' => $request->oldPrice,
+                'url' => $request->url,
+                'category_id' => $request->categoryId,
+                'user_id' => Auth::user()->id
+            ]);
 
-        $occasion->title = $request->input('title');
-        $occasion->description = $request->input('description');
-        $occasion->new_price = $request->input('newPrice');
-        $occasion->old_price = $request->input('oldPrice');
-        $occasion->url = $request->input('url');
-        $occasion->category_id = $request->input('categoryId');
-        $occasion->user_id = Auth::user()->id;
-
-        $occasion->save();
-
-        return response(new OccasionResource($occasion), 201);
+            if ($occasion) {
+                return response()->json([
+                    'message' => "Okazję dodano pomyślnie"
+                ], 201);
+            } else {
+                return response()->json([
+                    'message' => "Nie udało się dodać okazji"
+                ], 500);
+            }
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => "Coś poszło nie tak"
+            ], 500);
+        }
     }
 
     /**

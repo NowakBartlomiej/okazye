@@ -22,7 +22,13 @@ class StoreOccasionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //TODO Add validation rules
+            'title' => 'required|string|max:60',
+            'image' => 'nullable|image|mimes:png,jpeg,jpg,gif,svg',
+            'description' => 'required|max:500',
+            'newPrice' => 'regex:/^\d+(\,\d{1,2})?$/',
+            'oldPrice' => 'regex:/^\d+(\,\d{1,2})?$/',
+            'url' => 'url',
+            'categoryId' => 'required'
         ];
     }
 }
