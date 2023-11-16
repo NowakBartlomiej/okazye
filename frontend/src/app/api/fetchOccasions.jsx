@@ -1,10 +1,35 @@
 import fetchAxios from "@/lib/fetchAxios"
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { toast } from "react-toastify";
 
 export const createOccasions = (occasion) => {
-    fetchAxios.post('/occasions', occasion).catch((error) => {
-        throw new Error(error);
-    });
+    fetchAxios.post('/occasions', occasion)
+    .then((response) => {
+        toast(response.data.message, {
+            type: 'success',
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })
+    })
+    .catch((error) => {
+        toast(error.response.data.message, {
+            type: 'error',
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })
+    })
 }
 
 export const getOccasion = (occasionId) => {

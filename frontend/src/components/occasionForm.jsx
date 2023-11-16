@@ -14,6 +14,7 @@ const OccasionForm = () => {
     const [occasion, setOccasion] = useState({
         "title": "",
         "description": "",
+        "image": null,
         "newPrice": "",
         "oldPrice": "",
         "url": "",
@@ -22,7 +23,15 @@ const OccasionForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        createOccasions(occasion);
+        const formData = new FormData();
+        formData.append("title", occasion.title);
+        formData.append("description", occasion.description);
+        formData.append("image", occasion.image);
+        formData.append("newPrice", occasion.newPrice);
+        formData.append("oldPrice", occasion.oldPrice);
+        formData.append("url", occasion.url);
+        formData.append("categoryId", occasion.categoryId);
+        createOccasions(formData);
         router.push('/');
     }
 
@@ -38,7 +47,7 @@ const OccasionForm = () => {
 
                 <div className="grid mb-4">
                     <label htmlFor="photo">Zdjęcie okazji</label>
-                    <input id="photo" type="file" />
+                    <input id="photo" type="file" onChange={(e) => setOccasion({...occasion, image: e.target.files[0]})}/>
                 </div>
 
                 <div className="flex mb-4 justify-between">
