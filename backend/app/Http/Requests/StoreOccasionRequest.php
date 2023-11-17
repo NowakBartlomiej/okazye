@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOccasionRequest extends FormRequest
@@ -15,6 +17,19 @@ class StoreOccasionRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'image' => Request::has('image') ? $this->image : null,
+            'newPrice' => Request::has('newPrice') ? $this->newPrice : null,
+            'oldPrice' => Request::has('oldPrice') ? $this->oldPrice : null,
+            'url' => Request::has('url') ? $this->url : null,
+        ]);   
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
@@ -25,9 +40,9 @@ class StoreOccasionRequest extends FormRequest
             'title' => 'required|string|max:60',
             'image' => 'nullable|image|mimes:png,jpeg,jpg,gif,svg',
             'description' => 'required|max:500',
-            'newPrice' => 'regex:/^\d+(\,\d{1,2})?$/',
-            'oldPrice' => 'regex:/^\d+(\,\d{1,2})?$/',
-            'url' => 'url',
+            'newPrice' => 'nullable|regex:/^\d+(\,\d{1,2})?$/',
+            'oldPrice' => 'nullable|regex:/^\d+(\,\d{1,2})?$/',
+            'url' => 'nullable|url',
             'categoryId' => 'required'
         ];
     }
