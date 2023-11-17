@@ -25,15 +25,15 @@ class OccasionController extends Controller
     }
 
     public function latest() {
-        return OccasionResource::collection(Occasion::latest()->paginate(5));
+        return OccasionResource::collection(Occasion::with('user', 'category')->latest()->paginate(5));
     }
 
     public function mostPopular() {
-        return OccasionResource::collection(Occasion::orderBy('rating', 'desc')->paginate(5));
+        return OccasionResource::collection(Occasion::with('user', 'category')->orderBy('rating', 'desc')->paginate(5));
     }
 
     public function occasionsByCategory($categoryId) {
-        return OccasionResource::collection(Occasion::where('category_id', $categoryId)->orderBy('rating', 'desc')->paginate(5));
+        return OccasionResource::collection(Occasion::with('user', 'category')->where('category_id', $categoryId)->orderBy('rating', 'desc')->paginate(5));
     }
 
     public function forMe() {
@@ -60,7 +60,8 @@ class OccasionController extends Controller
                 $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
                 Storage::disk('public')->put($imageName, file_get_contents($request->image));
             }
-            
+
+            // dd($request);
             $occasion = Occasion::create([
                 'title' => $request->title,
                 'description' => $request->description,
@@ -76,6 +77,7 @@ class OccasionController extends Controller
                 return response()->json([
                     'message' => "Okazję dodano pomyślnie"
                 ], 201);
+                return new OccasionResource($occasion);
             } else {
                 return response()->json([
                     'message' => "Nie udało się dodać okazji"
