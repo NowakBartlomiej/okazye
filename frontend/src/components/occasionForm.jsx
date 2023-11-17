@@ -14,7 +14,7 @@ const OccasionForm = () => {
     const [occasion, setOccasion] = useState({
         "title": "",
         "description": "",
-        "image": null,
+        "image": "",
         "newPrice": "",
         "oldPrice": "",
         "url": "",
@@ -23,14 +23,15 @@ const OccasionForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+        
         const formData = new FormData();
-        formData.append("title", occasion.title);
-        formData.append("description", occasion.description);
-        formData.append("image", occasion.image);
-        formData.append("newPrice", occasion.newPrice);
-        formData.append("oldPrice", occasion.oldPrice);
-        formData.append("url", occasion.url);
-        formData.append("categoryId", occasion.categoryId);
+ 
+        Object.entries(occasion).forEach(([key, value]) => {
+            if ((value != "") && (value != undefined)) {
+                formData.append(key, value);
+            }
+        })
+
         createOccasions(formData);
         router.push('/');
     }
@@ -42,7 +43,7 @@ const OccasionForm = () => {
 
                 <div className="mb-4">
                     <label htmlFor="title">Tytuł okazji <span className="text-custom-light-gray-500 font-light">(wymagane)</span></label>
-                    <Input value={occasion.title} onChange={e => setOccasion({...occasion, title: e.target.value})} className="w-[50%]" variant="bordered" id="title" placeholder="Podaj krótki tytuł okazji" />
+                    <Input value={occasion.title || ""} onChange={e => setOccasion({...occasion, title: e.target.value})} className="w-[50%]" variant="bordered" id="title" placeholder="Podaj krótki tytuł okazji" />
                 </div>
 
                 <div className="grid mb-4">
@@ -53,17 +54,17 @@ const OccasionForm = () => {
                 <div className="flex mb-4 justify-between">
                     <div>
                         <label htmlFor="new-price">Nowa Cena</label>
-                        <Input value={occasion.newPrice} onChange={e => setOccasion({...occasion, newPrice: e.target.value})} className="w-[100%]" variant="bordered" id="new-price" placeholder="Podaj aktualną cenę" />
+                        <Input value={occasion.newPrice || ""} onChange={e => setOccasion({...occasion, newPrice: e.target.value})} className="w-[100%]" variant="bordered" id="new-price" placeholder="Podaj aktualną cenę" />
                     </div>
                     <div>
                         <label htmlFor="old-price">Stara Cena</label>
-                        <Input value={occasion.oldPrice} onChange={e => setOccasion({...occasion, oldPrice: e.target.value})} className="w-[100%]" variant="bordered" id="old-price" placeholder="Podaj starą cenę" />
+                        <Input value={occasion.oldPrice || ""} onChange={e => setOccasion({...occasion, oldPrice: e.target.value})} className="w-[100%]" variant="bordered" id="old-price" placeholder="Podaj starą cenę" />
                     </div>
                 </div>
 
                 <div className="mb-4">
                     <label htmlFor="url">Link do okazji</label>
-                    <Input value={occasion.url} onChange={e => setOccasion({...occasion, url: e.target.value})} className="w-[50%]" variant="bordered" id="url" placeholder="Podaj adres URL do okazji" />
+                    <Input value={occasion.url || ""} onChange={e => setOccasion({...occasion, url: e.target.value})} className="w-[50%]" variant="bordered" id="url" placeholder="Podaj adres URL do okazji" />
                 </div>
 
                 <div className="mb-4 flex flex-col">
@@ -78,7 +79,7 @@ const OccasionForm = () => {
                 <div className="mb-4">
                     <label htmlFor="description">Opis <span className="text-custom-light-gray-500 font-light">(wymagane)</span></label>
                     <Textarea
-                        value={occasion.description}
+                        value={occasion.description || ""}
                         onChange={e => setOccasion({...occasion, description: e.target.value})}
                         id="description"
                         placeholder="Opisz swoją okazję"
