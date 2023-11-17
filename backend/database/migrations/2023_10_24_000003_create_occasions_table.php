@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->decimal('new_price')->nullable();
             $table->decimal('old_price')->nullable();
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->integer('rating')->default(0);
             $table->date('duration_date')->default(Carbon::now());
             $table->boolean('status')->default(true);
