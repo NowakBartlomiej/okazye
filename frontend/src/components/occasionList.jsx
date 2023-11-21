@@ -44,13 +44,13 @@ const OccasionList = ({ occasionFilter }) => {
                 </div>
                 <div className=' w-full lg:w-full grid lg:place-items-center'>
 
-                    {isLoading && <SkeletonCard cards={3} />}
+                    {isLoading && <SkeletonCard cards={1} />}
 
                     <InfiniteScroll
                         dataLength={occasions ? occasions.length : 0}
                         next={() => fetchNextPage()}
                         hasMore={hasNextPage}
-                        loader={<SkeletonCard cards={3} />}
+                        loader={<SkeletonCard cards={1} />}
                         className='w-full lg:w-full grid lg:place-items-center'
                     >
                         <>
@@ -68,6 +68,7 @@ const OccasionList = ({ occasionFilter }) => {
                                     userName={occasion.user.name}
                                     userId={occasion.user.id}
                                     categoryId={occasion.category.id}
+                                    image={occasion.image}
                                 />
                             ))}
                         </>

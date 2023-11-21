@@ -16,9 +16,9 @@ const Comments = ({occasionId}) => {
             dataLength={comments ? comments.length : 0}
             next={() => fetchNextPage()}
             hasMore={hasNextPage}
-            loader={<SkeletonComment cards={3}/>}
+            loader={<SkeletonComment cards={1}/>}
         >
-            {isLoading && <SkeletonComment cards={3}/>}
+            {isLoading && <SkeletonComment cards={1}/>}
             <>
                 {comments && comments.map((comment, index) => (
                     <Comment 

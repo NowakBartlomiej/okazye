@@ -34,6 +34,7 @@ const Page = ({ params }) => {
                         userName={data.user.name}
                         userId={data.user.id}
                         categoryId={data.category.id}
+                        image={data.image}
                     />
                 }
 

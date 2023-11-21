@@ -64,6 +64,7 @@ const Page = ({ params }) => {
                   userName={occasion.user.name}
                   userId={occasion.user.id}
                   categoryId={occasion.category.id}
+                  image={occasion.image}
                 />
               ))}
             </>

@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { getFollowers, followUnfollowUser } from '@/app/api/followUser';
 import { followUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
 
-const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, url, userName, userId, categoryId }) => {
+const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, url, userName, userId, categoryId, image }) => {
     const { user } = useAuth();
 
     const { data: followers, isLoading, refetch } = getFollowers();
@@ -25,7 +25,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                             className="object-cover"
                             height={200}
                             shadow="md"
-                            src="https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg"
+                            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/storage/${image}`}
                             width="100%"
                         />
                     </div>
@@ -47,22 +47,42 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
 
                             <h2 className="text-[40px] font-bold">{title}</h2>
 
-                            <div className='text-[22px] font-semibold flex items-center justify-between'>
-                                <div className='flex items-center gap-3'>
-                                    <h3 className='text-custom-green-100 text-3xl font-semibold'>{newPrice} zł</h3>
-                                    <h3 className='text-custom-light-gray-500 text-3xl font-semibold line-through'>{oldPrice} zł</h3>
-                                </div>
-                                <div className='bg-custom-green-100 text-3xl font-semibold text-white rounded-2xl px-2.5 py-1.5'>
-                                    <p>{Math.floor(((oldPrice - newPrice) / oldPrice) * 100)}%</p>
-                                </div>
-                            </div>
+                            {(newPrice && oldPrice) && (
+                                <>
+                                    <div className='text-[22px] font-semibold flex items-center justify-between'>
+                                        <div className='flex items-center gap-3'>
+                                            <h3 className='text-custom-green-100 text-3xl font-semibold'>{newPrice} zł</h3>
+                                            <h3 className='text-custom-light-gray-500 text-3xl font-semibold line-through'>{oldPrice} zł</h3>
+                                        </div>
+                                        <div className='bg-custom-green-100 text-3xl font-semibold text-white rounded-2xl px-2.5 py-1.5'>
+                                            <p>{Math.floor(((oldPrice - newPrice) / oldPrice) * 100)}%</p>
+                                        </div>
+                                    </div>
 
-                            <small className='text-custom-light-gray-500 text-lg'>Najniższa cena z 30 dni {newPrice} zł</small>
-                            <div className='flex justify-center'>
-                                <Button startContent={<BsBoxArrowUpRight size={26} />} className='w-[70%] bg-custom-green-400 hover:bg-[#1d4c4fcc] transition-colors  text-white text-2xl font-semibold py-7'>
-                                    <Link target='_blank' href={url}>Pzekieruj do okazji</Link>
-                                </Button>
-                            </div>
+                                    <small className='text-custom-light-gray-500 text-lg'>Najniższa cena z 30 dni {newPrice} zł</small>
+                                </>
+                            )}
+                            {(newPrice && !oldPrice) && (
+                                    <>
+                                        <div className='text-[22px] font-semibold flex items-center justify-between'>
+                                            <div className='flex items-center gap-3'>
+                                                <h3 className='text-custom-green-100 text-3xl'>{newPrice} zł</h3>
+                                            </div>
+                                        </div>
+
+                                        <small className='text-custom-light-gray-500 text-base'>Najniższa cena z 30 dni {newPrice} zł</small>
+                                    </>
+                                )
+                                }
+
+                            {url && (
+                                <div className='flex justify-center'>
+                                    <Button startContent={<BsBoxArrowUpRight size={26} />} className='w-[70%] bg-custom-green-400 hover:bg-[#1d4c4fcc] transition-colors  text-white text-2xl font-semibold py-7'>
+                                        <Link target='_blank' href={url}>Pzekieruj do okazji</Link>
+                                    </Button>
+                                </div>
+                            )}
+
 
                         </div>
                     </div>
