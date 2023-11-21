@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
-class StoreOccasionRequest extends FormRequest
+class UpdateOccasionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +25,7 @@ class StoreOccasionRequest extends FormRequest
             'newPrice' => Request::has('newPrice') ? $this->newPrice : null,
             'oldPrice' => Request::has('oldPrice') ? $this->oldPrice : null,
             'url' => Request::has('url') ? $this->url : null,
-        ]);   
+        ]);
     }
 
     /**

@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OccasionResource;
 use App\Http\Requests\StoreOccasionRequest;
+use App\Http\Requests\UpdateOccasionRequest;
 use Illuminate\Support\Facades\Storage;
 
 class OccasionController extends Controller
@@ -24,26 +25,31 @@ class OccasionController extends Controller
         return OccasionResource::collection(Occasion::paginate(5));
     }
 
-    public function latest() {
+    public function latest()
+    {
         return OccasionResource::collection(Occasion::with('user', 'category')->latest()->paginate(5));
     }
 
-    public function mostPopular() {
+    public function mostPopular()
+    {
         return OccasionResource::collection(Occasion::with('user', 'category')->orderBy('rating', 'desc')->paginate(5));
     }
 
-    public function occasionsByCategory($categoryId) {
+    public function occasionsByCategory($categoryId)
+    {
         return OccasionResource::collection(Occasion::with('user', 'category')->where('category_id', $categoryId)->orderBy('rating', 'desc')->paginate(5));
     }
 
-    public function forMe() {
+    public function forMe()
+    {
         $categories = DB::table('category_user')->where('user_id', Auth::user()->id)->pluck('category_id')->toArray();
         $occasion = Occasion::whereIn('category_id', $categories)->latest()->paginate(5);
 
         return OccasionResource::collection($occasion);
     }
 
-    public function followedOccasions() {
+    public function followedOccasions()
+    {
         $users = DB::table("followers")->where('follower_id', 11)->pluck('user_id')->toArray();
         $occasion = Occasion::whereIn('user_id', $users)->latest()->paginate(5);
 
@@ -77,13 +83,11 @@ class OccasionController extends Controller
                 return response()->json([
                     'message' => "Okazję dodano pomyślnie"
                 ], 201);
-                return new OccasionResource($occasion);
             } else {
                 return response()->json([
                     'message' => "Nie udało się dodać okazji"
                 ], 500);
             }
-            
         } catch (Exception $e) {
             return response()->json([
                 'message' => "Coś poszło nie tak"
@@ -102,20 +106,61 @@ class OccasionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Occasion $occasion)
+    public function update(UpdateOccasionRequest $request, Occasion $occasion)
     {
-        $occasion->title = $request->input('title');
-        $occasion->title = $request->input('title');
-        $occasion->description = $request->input('description');
-        $occasion->new_price = $request->input('newPrice');
-        $occasion->old_price = $request->input('oldPrice');
-        $occasion->url = $request->input('url');
-        $occasion->category_id = $request->input('categoryId');
-        $occasion->user_id = Auth::user()->id;
+        try {
+            $storage = Storage::disk('public');
+            if ($request->hasFile('image')) {
+                
 
-        $occasion->save();
+                // Delete old image
+                if ($occasion->image != null) {
+                    if ($storage->exists($occasion->image)) {
+                        $storage->delete($occasion->image);
+                    }
+                }
+                
+                // New image
+                $imageName = Str::random(32) . "." . $request->image->getClientOriginalExtension();
 
-        return new OccasionResource($occasion);
+                $occasion->image = $imageName;
+                
+                Storage::disk('public')->put($imageName, file_get_contents($request->image));
+            }
+
+            if($request->image == null) {
+                if ($occasion->image != null) {
+                    if($storage->exists($occasion->image)) {
+                        $storage->delete($occasion->image);
+                    }
+                }
+
+                $occasion->image = null;
+            }
+
+            $occasion->title = $request->input('title');
+            $occasion->description = $request->input('description');
+            $occasion->new_price = $request->input('newPrice');
+            $occasion->old_price = $request->input('oldPrice');
+            $occasion->url = $request->input('url');
+            $occasion->category_id = $request->input('categoryId');
+            
+            if ($occasion->save()) {
+                return response()->json([
+                    'message' => "Okazję edytowano pomyślnie"
+                ], 201);
+            } else {
+                return response()->json([
+                    'message' => "Nie udało się edytować okazji"
+                ], 500);
+            }
+
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => "Coś poszło nie tak"
+            ], 500);
+        }
     }
 
     /**
@@ -123,8 +168,22 @@ class OccasionController extends Controller
      */
     public function destroy(Occasion $occasion)
     {
-        $occasion->delete();
-
-        return response("Usunięto okazję", 204);
+        // It is for force delte   
+        // if ($occasion->image != null) {
+        //     $storage = Storage::disk('public');
+        //     if($storage->exists($occasion->image)) {
+        //         $storage->delete($occasion->image);
+        //     }
+        // }
+        
+        if ($occasion->delete()) {
+            response()->json([
+                'message' => "Usunięto okazję"
+            ], 201);
+        } else {
+            return response()->json([
+                'message' => "Coś poszło nie tak"
+            ], 500);
+        }
     }
 }
