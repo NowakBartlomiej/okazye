@@ -10,34 +10,34 @@ export const createOccasion = (occasion) => {
     return useMutation({
         mutationFn: async (occasion) => {
             await fetchAxios.post('/occasions', occasion)
-            .then((response) => {
-                toast(response.data.message, {
-                    type: 'success',
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
+                .then((response) => {
+                    toast(response.data.message, {
+                        type: 'success',
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    })
+                    return response
                 })
-                return response
-            })
-            .catch((error) => {
-                toast("Niepoprawne dane", {
-                    type: 'error',
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
+                .catch((error) => {
+                    toast("Niepoprawne dane", {
+                        type: 'error',
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    })
+                    throw error
                 })
-                throw error
-            })
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["infOccasions"]);
@@ -46,31 +46,87 @@ export const createOccasion = (occasion) => {
     })
 }
 
+export const deleteOccasion = (occasionId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (occasionId) => {
+            await fetchAxios.delete(`/occasions/${occasionId}`)
+                .then((response) => {
+                    toast(response.data.message, {
+                        type: 'success',
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    })
+                    return response
+                })
+                .catch((error) => {
+                    toast("Niepoprawne dane", {
+                        type: 'error',
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    })
+                    console.log(error);
+                })
+        },
+        onSuccess: () => {
+            toast("Usunięto okazję", {
+                type: 'success',
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            })
+            Promise.all([
+                queryClient.invalidateQueries(["occasions"]),
+                queryClient.invalidateQueries(["userOccasions"])
+            ])
+        }
+    })
+
+}
+
 export const getOccasion = (occasionId) => {
     return useQuery({
         queryKey: ['occasion'],
         queryFn: async () => {
             const result = await fetchAxios
-            .get(`occasions/${occasionId}`)
-            .catch((error) => {
-                throw new Error(error);
-              });
-        
+                .get(`occasions/${occasionId}`)
+                .catch((error) => {
+                    throw new Error(error);
+                });
+
             return result.data;
         }
     })
-} 
+}
 
 export const getOccasions = (pageParam = 1) => {
     return useQuery({
         queryKey: ['occasions'],
         queryFn: async () => {
             const result = await fetchAxios
-            .get(`occasions?page=${pageParam}`)
-            .catch((error) => {
-                throw new Error(error);
-              });
-        
+                .get(`occasions?page=${pageParam}`)
+                .catch((error) => {
+                    throw new Error(error);
+                });
+
             return result.data;
         }
     })
@@ -79,13 +135,13 @@ export const getOccasions = (pageParam = 1) => {
 export const getInfiniteOccasions = (slug) => {
     return useInfiniteQuery({
         queryKey: ['infOccasions', slug],
-        queryFn: async ({pageParam = 1}) => {
+        queryFn: async ({ pageParam = 1 }) => {
             const result = await fetchAxios
-            .get(`${slug}?page=${pageParam}`)
-            .catch((error) => {
-                throw new Error(error);
-              });
-        
+                .get(`${slug}?page=${pageParam}`)
+                .catch((error) => {
+                    throw new Error(error);
+                });
+
             return result.data;
         },
         refetchOnWindowFocus: false,
@@ -96,13 +152,13 @@ export const getInfiniteOccasions = (slug) => {
 export const getUserOccasions = () => {
     return useInfiniteQuery({
         queryKey: ['userOccasions'],
-        queryFn: async ({pageParam = 1}) => {
+        queryFn: async ({ pageParam = 1 }) => {
             const result = await fetchAxios
-            .get(`my-occasions?page=${pageParam}`)
-            .catch((error) => {
-                throw new Error(error);
-              });
-        
+                .get(`my-occasions?page=${pageParam}`)
+                .catch((error) => {
+                    throw new Error(error);
+                });
+
             return result.data;
         },
         refetchOnWindowFocus: false,
@@ -113,13 +169,13 @@ export const getUserOccasions = () => {
 export const getOccasionsByCategory = (categoryId) => {
     return useInfiniteQuery({
         queryKey: ['occasionsByCategory', categoryId],
-        queryFn: async ({pageParam = 1}) => {
+        queryFn: async ({ pageParam = 1 }) => {
             const result = await fetchAxios
-            .get(`occasions-by-category/${categoryId}?page=${pageParam}`)
-            .catch((error) => {
-                throw new Error(error);
-              });
-        
+                .get(`occasions-by-category/${categoryId}?page=${pageParam}`)
+                .catch((error) => {
+                    throw new Error(error);
+                });
+
             return result.data;
         },
         refetchOnWindowFocus: false,

@@ -1,15 +1,17 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { Card, CardBody, Image, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { Card, CardBody, Image, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, useDisclosure } from "@nextui-org/react";
 import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill, BsPencilSquare, BsFillTrashFill } from 'react-icons/bs'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth';
 import { followUnfollowUser, getFollowers } from '@/app/api/followUser';
 import { followUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
+import DeleteModal from './deleteModal';
 
 const OccassionCard = ({ occasionId, title, description, categoryName, newPrice, oldPrice, rating, url, userName, userId, categoryId, image }) => {
     const router = useRouter()
     const { user } = useAuth();
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     const { data: followers, isLoading, refetch } = getFollowers();
     const { data: categoryFollowers, isLoading: categoryIsLoading, refetch: categoryRefetch } = getCategoryFollowers();
@@ -17,6 +19,9 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
 
 
     return (
+        <>
+        <DeleteModal occasionId={occasionId} isOpen={isOpen} occasionTitle={title} onOpenChange={onOpenChange}/>
+        
         <div onClick={() => router.push(`/okazja/${occasionId}`)} className='lg:w-9/12 mb-3 mx-3 sm:mx-5 md:mx-8 lg:mx-2 cursor-pointer'>
             <Card
                 className="border-none bg-white "
@@ -31,7 +36,8 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                             }}
                             className='text-lg bg-blue-400 text-white hover:bg-blue-300' 
                             startContent={<BsPencilSquare size={18}/>}>Edytuj</Button>
-                            <Button 
+                            <Button
+                            onPress={onOpen} 
                             onClick={(e) => {
                                 e.stopPropagation();
                             }}
@@ -175,6 +181,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                 </CardBody>
             </Card>
         </div>
+        </>
     )
 }
 
