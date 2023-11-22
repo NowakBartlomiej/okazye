@@ -32,6 +32,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                                 shadow="md"
                                 src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/storage/${image}`}
                                 width="100%"
+                                placeholder='no-image'
                             />
                         </div>
 

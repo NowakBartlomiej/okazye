@@ -59,8 +59,9 @@ class StoreOccasionRequest extends FormRequest
             'description.required' => 'Opis jest wymagany',
             'categoryId.required' => 'Kategoria jest wymagana',
             'url.url' => 'Format URL jest niepoprawny',
-            'newPrice' => 'Format ceny jest niepoprawny',
-            'oldPrice' => 'Format ceny jest niepoprawny',
+            'newPrice' => 'Format ceny jest niepoprawny. Wymagany format to X,XX',
+            'oldPrice' => 'Format ceny jest niepoprawny. Wymagany format to X,XX',
+            'image' => 'Obraz musi być w formacie: png, jpeg, jpg, gif lub svg'
         ];
     }
 }
