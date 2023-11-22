@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Card, CardBody, Image, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
-import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
+import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill, BsPencilSquare, BsFillTrashFill } from 'react-icons/bs'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth';
 import { followUnfollowUser, getFollowers } from '@/app/api/followUser';
@@ -23,6 +23,22 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                 shadow="sm"
             >
                 <CardBody>
+                    {user.id == userId && (
+                        <div className='flex  w-fit gap-3 mb-4'>
+                            <Button 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            className='text-lg bg-blue-400 text-white hover:bg-blue-300' 
+                            startContent={<BsPencilSquare size={18}/>}>Edytuj</Button>
+                            <Button 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            className='text-lg bg-red-500 text-white hover:bg-red-400' 
+                            startContent={<BsFillTrashFill size={18}/>}>Usuń</Button>
+                        </div>
+                    )}
                     <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
                         <div className="relative col-span-6 md:col-span-4">
                             <Image

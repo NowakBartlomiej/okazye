@@ -27,6 +27,7 @@ Route::get('/latest-occasions', [OccasionController::class, 'latest']);
 Route::get('/most-popular-occasions', [OccasionController::class, 'mostPopular']);
 Route::get('/for-me', [OccasionController::class, 'forMe']);
 Route::get('/followed-occasions', [OccasionController::class, 'followedOccasions']);
+Route::get('/my-occasions', [OccasionController::class, 'myOccasions']);
 
 Route::get('/occasions-by-category/{categoryId}', [OccasionController::class, 'occasionsByCategory']);
 

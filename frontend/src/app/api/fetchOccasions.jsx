@@ -93,6 +93,23 @@ export const getInfiniteOccasions = (slug) => {
     })
 }
 
+export const getUserOccasions = () => {
+    return useInfiniteQuery({
+        queryKey: ['userOccasions'],
+        queryFn: async ({pageParam = 1}) => {
+            const result = await fetchAxios
+            .get(`my-occasions?page=${pageParam}`)
+            .catch((error) => {
+                throw new Error(error);
+              });
+        
+            return result.data;
+        },
+        refetchOnWindowFocus: false,
+        getNextPageParam: (lastPage) => (lastPage.links.next == null ? undefined : lastPage.meta.current_page + 1)
+    })
+}
+
 export const getOccasionsByCategory = (categoryId) => {
     return useInfiniteQuery({
         queryKey: ['occasionsByCategory', categoryId],

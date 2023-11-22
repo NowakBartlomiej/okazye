@@ -25,6 +25,10 @@ class OccasionController extends Controller
         return OccasionResource::collection(Occasion::paginate(5));
     }
 
+    public function myOccasions() {
+        return OccasionResource::collection(Occasion::with('user', 'category')->where('user_id', Auth::user()->id)->latest()->paginate(5));
+    }
+
     public function latest()
     {
         return OccasionResource::collection(Occasion::with('user', 'category')->latest()->paginate(5));
@@ -175,14 +179,19 @@ class OccasionController extends Controller
         //         $storage->delete($occasion->image);
         //     }
         // }
-        
-        if ($occasion->delete()) {
-            response()->json([
-                'message' => "Usunięto okazję"
-            ], 201);
+        if (Auth::user()->id == $occasion->user_id) {
+            if ($occasion->delete()) {
+                response()->json([
+                    'message' => "Usunięto okazję"
+                ], 201);
+            } else {
+                return response()->json([
+                    'message' => "Coś poszło nie tak"
+                ], 500);
+            }
         } else {
             return response()->json([
-                'message' => "Coś poszło nie tak"
+                'message' => "Nie można edytować nieswojej okazji"
             ], 500);
         }
     }
