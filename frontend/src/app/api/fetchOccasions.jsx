@@ -46,6 +46,52 @@ export const createOccasion = (occasion) => {
     })
 }
 
+export const updateOccasion = () => {
+    const queryClient = useQueryClient();
+    const router = useRouter()
+
+    return useMutation({
+        mutationFn: async (occasion) => {
+            await fetchAxios.put(`/occasions/${occasion.id}`, occasion)
+            .then((response) => {
+                toast(response.data.message, {
+                    type: 'success',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                return response
+            })
+            .catch((error) => {
+                toast("Niepoprawne dane", {
+                    type: 'error',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                throw error
+            })
+        },
+        onSuccess: () => {
+            Promise.all([
+                queryClient.invalidateQueries(["occasions"]),
+                queryClient.invalidateQueries(["userOccasions"])
+            ])
+            router.back();
+        }
+    })
+}
+
 export const deleteOccasion = (occasionId) => {
     const queryClient = useQueryClient();
 

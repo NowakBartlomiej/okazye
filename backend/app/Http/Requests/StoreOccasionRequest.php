@@ -23,9 +23,9 @@ class StoreOccasionRequest extends FormRequest
     {
         $this->merge([
             'image' => Request::has('image') ? $this->image : null,
-            'newPrice' => Request::has('newPrice') ? $this->newPrice : null,
-            'oldPrice' => Request::has('oldPrice') ? $this->oldPrice : null,
-            'url' => Request::has('url') ? $this->url : null,
+            'newPrice' => Request::has('newPrice') && (strlen($this->newPrice) > 0) ? Str::replace(',', '.', $this->newPrice) : null,
+            'oldPrice' => Request::has('oldPrice') && (strlen($this->oldPrice) > 0)  ? Str::replace(',', '.', $this->oldPrice) : null,
+            'url' => Request::has('url') && (strlen($this->url) > 0) ? $this->url : null,
         ]);   
     }
 

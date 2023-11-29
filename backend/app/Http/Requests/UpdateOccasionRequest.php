@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UpdateOccasionRequest extends FormRequest
 {
@@ -22,9 +23,9 @@ class UpdateOccasionRequest extends FormRequest
     {
         $this->merge([
             'image' => Request::has('image') ? $this->image : null,
-            'newPrice' => Request::has('newPrice') ? $this->newPrice : null,
-            'oldPrice' => Request::has('oldPrice') ? $this->oldPrice : null,
-            'url' => Request::has('url') ? $this->url : null,
+            'newPrice' => Request::has('newPrice') && (strlen($this->newPrice) > 0) ? Str::replace(',', '.', $this->newPrice) : null,
+            'oldPrice' => Request::has('oldPrice') && (strlen($this->oldPrice) > 0)  ? Str::replace(',', '.', $this->oldPrice) : null,
+            'url' => Request::has('url') && (strlen($this->url) > 0) ? $this->url : null,
         ]);
     }
 
@@ -39,8 +40,8 @@ class UpdateOccasionRequest extends FormRequest
             'title' => 'required|string|max:60',
             'image' => 'nullable|image|mimes:png,jpeg,jpg,gif,svg',
             'description' => 'required|max:500',
-            'newPrice' => 'nullable|regex:/^\d+(\,\d{1,2})?$/',
-            'oldPrice' => 'nullable|regex:/^\d+(\,\d{1,2})?$/',
+            'newPrice' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'oldPrice' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
             'url' => 'nullable|url',
             'categoryId' => 'required'
         ];

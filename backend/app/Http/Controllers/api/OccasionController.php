@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OccasionResource;
 use App\Http\Requests\StoreOccasionRequest;
 use App\Http\Requests\UpdateOccasionRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class OccasionController extends Controller
@@ -132,15 +133,15 @@ class OccasionController extends Controller
                 Storage::disk('public')->put($imageName, file_get_contents($request->image));
             }
 
-            if($request->image == null) {
-                if ($occasion->image != null) {
-                    if($storage->exists($occasion->image)) {
-                        $storage->delete($occasion->image);
-                    }
-                }
+            // if($request->image == null) {
+            //     if ($occasion->image != null) {
+            //         if($storage->exists($occasion->image)) {
+            //             $storage->delete($occasion->image);
+            //         }
+            //     }
 
-                $occasion->image = null;
-            }
+            //     $occasion->image = null;
+            // }
 
             $occasion->title = $request->input('title');
             $occasion->description = $request->input('description');
