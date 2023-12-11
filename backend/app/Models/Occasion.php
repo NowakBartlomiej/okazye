@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Occasion extends Model
 {
@@ -32,4 +33,15 @@ class Occasion extends Model
     public function comments() {
         return $this->hasMany(Comment::class);
     }
+
+    public function ratings() {
+        return $this->belongsToMany(User::class)->withPivot('rating');
+    }
+
+
+    public function rating() {
+        return $this->ratings->sum('pivot.rating');
+    }
+
+    
 }

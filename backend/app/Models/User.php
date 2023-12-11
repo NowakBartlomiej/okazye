@@ -69,4 +69,12 @@ class User extends Authenticatable
     public function comments() {
         return $this->hasMany(Comment::class);
     }
+
+    public function ratings() {
+        return $this->belongsToMany(Occasion::class)->withPivot('rating');
+    }
+
+    public function commentRatings() {
+        return $this->belongsToMany(Comment::class)->withPivot('type', 'occasion_id');
+    }
 }

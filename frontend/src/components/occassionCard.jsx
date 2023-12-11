@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { followUnfollowUser, getFollowers } from '@/app/api/followUser';
 import { followUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
 import DeleteModal from './deleteModal';
+import { rateOccasion } from '@/app/api/fetchRating';
 
 const OccassionCard = ({ occasionId, title, description, categoryName, newPrice, oldPrice, rating, url, userName, userId, categoryId, image }) => {
     const router = useRouter()
@@ -15,6 +16,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
 
     const { data: followers, isLoading, refetch } = getFollowers();
     const { data: categoryFollowers, isLoading: categoryIsLoading, refetch: categoryRefetch } = getCategoryFollowers();
+    const {mutate: rate, error} = rateOccasion();
 
 
 
@@ -70,10 +72,28 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
 
 
                                     </div>
-                                    <div className='border-2 border-custom-green-100 rounded-md flex items-center gap-5 px-4 py-2'>
-                                        <button className='text-red-600'><BsFillDashCircleFill size={30} /></button>
+                                    <div onClick={(e) => e.stopPropagation()} className='border-2 border-custom-green-100 rounded-md flex items-center gap-5 px-4 py-2'>
+                                        <button 
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                rate({
+                                                    occasionId: occasionId,
+                                                    rating: -1,
+                                                })
+                                            }}
+                                            disabled={!user} 
+                                            className='text-red-600 hover:text-red-500 transition-colors'><BsFillDashCircleFill size={30} /></button>
                                         <span className='text-black font-semibold text-xl'>{rating}</span>
-                                        <button className='text-green-700'><BsPlusCircleFill size={30} /></button>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                rate({
+                                                    occasionId: occasionId,
+                                                    rating: 1,
+                                                })
+                                            }}
+                                            disabled={!user} 
+                                            className='text-green-700 hover:text-green-600 transition-colors'><BsPlusCircleFill size={30} /></button>
                                     </div>
                                 </div>
 

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\CommentController;
+use App\Http\Controllers\api\CommentRatingController;
 use App\Http\Controllers\api\FollowerController;
 use App\Http\Controllers\api\OccasionController;
+use App\Http\Controllers\api\RatingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,3 +42,7 @@ Route::post('/follow-unfollow-category', [CategoryController::class, 'followUnfo
 Route::get('/followed-categories', [CategoryController::class, 'followedCategories']);
 
 Route::apiResource('/comments', CommentController::class);
+
+Route::post('/rate', [RatingController::class, 'rate']);
+
+Route::post('/rate-comment', [CommentRatingController::class, 'rateComment']);

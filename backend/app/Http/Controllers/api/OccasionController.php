@@ -105,6 +105,7 @@ class OccasionController extends Controller
      */
     public function show(Occasion $occasion)
     {
+        // $occasion->load('comments');
         return new OccasionResource($occasion);
     }
 
