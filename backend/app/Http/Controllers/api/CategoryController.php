@@ -8,6 +8,7 @@ use App\Http\Resources\CategoryUserResource;
 use App\Models\Category;
 use App\Models\Follower;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -68,7 +69,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Category::create([
+                'name' => $request->name,
+            ]);
+
+            return response()->json([
+                'message' => "Dodano kategorię: " . $request->name 
+            ],200);
+        } catch(Exception $e) {
+            return response()->json([
+                'message' => "Coś poszło nie tak"
+            ], 500);
+        }
     }
 
     /**
@@ -82,16 +95,41 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        try {
+            $category->name = $request->name;
+            $category->save();
+
+            if ($category->save()) {
+                return response()->json([
+                    'message' => "Kategorię edytowano pomyślnie"
+                ], 201);
+            } else {
+                return response()->json([
+                    'message' => "Nie udało się edytować kategorii"
+                ], 500);
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                'message' => "Coś poszło nie tak"
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        if ($category->delete()) {
+            return response()->json([
+                'message' => "Usunięto kategorię"
+            ], 201);
+        } else {
+            return response()->json([
+                'message' => "Coś poszło nie tak"
+            ], 500);
+        }
     }
 }
