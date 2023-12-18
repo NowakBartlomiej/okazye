@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('occasion_count');
             $table->integer('comment_count');
             $table->integer('users_count');
+            $table->timestamps();
         });
     }
 

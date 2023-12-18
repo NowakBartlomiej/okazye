@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Stat extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'occasion_count',
+        'comment_count',
+        'users_count'
+    ];
 }
