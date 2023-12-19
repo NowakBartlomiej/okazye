@@ -49,6 +49,9 @@ class User extends Authenticatable
         return $this->hasMany(Occasion::class);
     }
 
+    public function userStats() {
+        return $this->hasOne(UserStat::class);
+    }
 
     // follower_id = our_id
     // user_id = followed persons id

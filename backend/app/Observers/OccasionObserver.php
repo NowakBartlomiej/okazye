@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Occasion;
+use App\Models\UserStat;
+use Illuminate\Support\Facades\Auth;
 
 class OccasionObserver
 {
@@ -11,7 +13,10 @@ class OccasionObserver
      */
     public function created(Occasion $occasion): void
     {
-        //
+        UserStat::updateOrCreate(
+            ['user_id' => $occasion->user_id],
+            ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+        );
     }
 
     /**
@@ -19,7 +24,10 @@ class OccasionObserver
      */
     public function updated(Occasion $occasion): void
     {
-        //
+        UserStat::updateOrCreate(
+            ['user_id' => $occasion->user_id],
+            ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+        );
     }
 
     /**
@@ -27,7 +35,10 @@ class OccasionObserver
      */
     public function deleted(Occasion $occasion): void
     {
-        //
+        UserStat::updateOrCreate(
+            ['user_id' => $occasion->user_id],
+            ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+        );
     }
 
     /**
@@ -43,6 +54,9 @@ class OccasionObserver
      */
     public function forceDeleted(Occasion $occasion): void
     {
-        //
+        UserStat::updateOrCreate(
+            ['user_id' => $occasion->user_id],
+            ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+        );
     }
 }
