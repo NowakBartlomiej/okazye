@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Comment;
+use App\Models\Follower;
 use App\Models\Occasion;
 use App\Observers\CommentObserver;
+use App\Observers\FollowerObserver;
 use App\Observers\OccasionObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -31,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
     {
         Occasion::observe(OccasionObserver::class);
         Comment::observe(CommentObserver::class);
+        Follower::observe(FollowerObserver::class);
     }
 
     /**
