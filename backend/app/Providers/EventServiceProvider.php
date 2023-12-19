@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Comment;
 use App\Models\Occasion;
+use App\Observers\CommentObserver;
 use App\Observers\OccasionObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,6 +30,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Occasion::observe(OccasionObserver::class);
+        Comment::observe(CommentObserver::class);
     }
 
     /**
