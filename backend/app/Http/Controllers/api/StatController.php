@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StatResource;
 use App\Models\Stat;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class StatController extends Controller
      */
     public function index()
     {
-        //
+        return StatResource::collection(Stat::get());
     }
 
     /**

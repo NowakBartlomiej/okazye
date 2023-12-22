@@ -14,6 +14,11 @@ class StatResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            'occasionCount' => $this->occasion_count,
+            'commentCount' => $this->comment_count,
+            'userCount' => $this->users_count,
+        ];
     }
 }
