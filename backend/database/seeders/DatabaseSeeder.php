@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(OccasionSeeder::class);
         $this->call(CommentSeeder::class);    
-        $this->call(StatSeeder::class);
         $this->call(BadgeSeeder::class);
     }
 }

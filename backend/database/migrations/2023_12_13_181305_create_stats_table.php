@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('stats', function (Blueprint $table) {
             $table->id();
-            $table->integer('occasion_count');
-            $table->integer('comment_count');
-            $table->integer('users_count');
+            $table->integer('occasion_count')->default(0);
+            $table->integer('comment_count')->default(0);
+            $table->integer('users_count')->default(0);
             $table->timestamps();
         });
     }

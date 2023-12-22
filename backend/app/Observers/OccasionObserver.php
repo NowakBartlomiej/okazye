@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Occasion;
+use App\Models\Stat;
 use App\Models\UserStat;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,11 @@ class OccasionObserver
             ['user_id' => $occasion->user_id],
             ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
         );
+
+        Stat::updateOrCreate(
+            ['id' => 1],
+            ['occasion_count' => Occasion::count()]
+        );
     }
 
     /**
@@ -28,6 +34,11 @@ class OccasionObserver
             ['user_id' => $occasion->user_id],
             ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
         );
+
+        Stat::updateOrCreate(
+            ['id' => 1],
+            ['occasion_count' => Occasion::count()]
+        );
     }
 
     /**
@@ -38,6 +49,11 @@ class OccasionObserver
         UserStat::updateOrCreate(
             ['user_id' => $occasion->user_id],
             ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+        );
+
+        Stat::updateOrCreate(
+            ['id' => 1],
+            ['occasion_count' => Occasion::count()]
         );
     }
 
@@ -57,6 +73,11 @@ class OccasionObserver
         UserStat::updateOrCreate(
             ['user_id' => $occasion->user_id],
             ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+        );
+
+        Stat::updateOrCreate(
+            ['id' => 1],
+            ['occasion_count' => Occasion::count()]
         );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Comment;
+use App\Models\Stat;
 use App\Models\UserStat;
 
 class CommentObserver
@@ -16,6 +17,11 @@ class CommentObserver
             ['user_id' => $comment->user_id],
             ['comments-created' => Comment::where('user_id', $comment->user_id)->get()->count()]
         );
+
+        Stat::updateOrCreate(
+            ['id' => 1],
+            ['comment_count' => Comment::count()]
+        );
     }
 
     /**
@@ -27,6 +33,11 @@ class CommentObserver
             ['user_id' => $comment->user_id],
             ['comments-created' => Comment::where('user_id', $comment->user_id)->get()->count()]
         );
+
+        Stat::updateOrCreate(
+            ['id' => 1],
+            ['comment_count' => Comment::count()]
+        );
     }
 
     /**
@@ -37,6 +48,11 @@ class CommentObserver
         UserStat::updateOrCreate(
             ['user_id' => $comment->user_id],
             ['comments-created' => Comment::where('user_id', $comment->user_id)->get()->count()]
+        );
+
+        Stat::updateOrCreate(
+            ['id' => 1],
+            ['comment_count' => Comment::count()]
         );
     }
 
@@ -56,6 +72,11 @@ class CommentObserver
         UserStat::updateOrCreate(
             ['user_id' => $comment->user_id],
             ['comments-created' => Comment::where('user_id', $comment->user_id)->get()->count()]
+        );
+
+        Stat::updateOrCreate(
+            ['id' => 1],
+            ['comment_count' => Comment::count()]
         );
     }
 }

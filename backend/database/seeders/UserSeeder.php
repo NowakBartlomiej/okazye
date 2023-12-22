@@ -15,6 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        Role::create(['name' => 'user']);
+        
         Role::create(['name' => 'admin']);
         $admin = User::firstOrCreate([
             'id' => 1,
