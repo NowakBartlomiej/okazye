@@ -7,6 +7,7 @@ use App\Http\Controllers\api\FollowerController;
 use App\Http\Controllers\api\OccasionController;
 use App\Http\Controllers\api\RatingController;
 use App\Http\Controllers\api\RoleController;
+use App\Http\Controllers\api\SearchController;
 use App\Http\Controllers\api\StatController;
 use App\Http\Controllers\api\UserBadgeController;
 use Illuminate\Http\Request;
@@ -56,4 +57,6 @@ Route::get('/has-moderator-role', [RoleController::class, 'hasModeratorRole']);
 Route::apiResource('/stats', StatController::class)->only('index');
 
 Route::get('/user-badges', [UserBadgeController::class, 'index']);
+
+Route::get('/search/{searchInput}', [SearchController::class, 'search']);
 
