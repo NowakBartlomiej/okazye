@@ -1,20 +1,19 @@
 'use client'
 
 import React, { useState } from 'react'
-import { BsBoxArrowLeft, BsBookmarkStarFill, BsWindowStack, BsArrowLeftCircleFill} from "react-icons/bs";
+import { BsBoxArrowLeft, BsArrowLeftCircleFill, BsBarChartLineFill, BsFillStarFill, BsFillPlusCircleFill } from "react-icons/bs";
 import { Avatar, Tooltip } from '@nextui-org/react'
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 
+const AdminSidebar = ({children}) => {
+    const {user} = useAuth();
+    const [open, setOpen] = useState(true);
+    const router = useRouter();
+    const pathname = usePathname();
 
-const Sidebar = ({children}) => {
-  const {user} = useAuth();
-  const [open, setOpen] = useState(true);
-  const router = useRouter();
-  const pathname = usePathname();
-
-  return (
-    <aside className='flex'>
+    return (
+        <aside className='flex'>
         <div className={`${open ? "w-80" : "w-20 "} bg-white flex flex-col justify-between sticky top-[4rem] h-[calc(100vh-4rem)] shadow-md px-4 duration-300`}>
           
           <BsArrowLeftCircleFill 
@@ -27,23 +26,30 @@ const Sidebar = ({children}) => {
           <div>
             <div className='flex flex-col gap-5 justify-center items-center mt-4 border-b-[3px] pb-2'>
               <Avatar className={`border-4 border-custom-green-100 w-[100px] h-[100px] duration-300 ${!open && "w-[50px] h-[50px]"}`}/>
-              <h2 className={`font-semibold text-[22px] text-center leading-6 duration-300 ${!open && "scale-0 hidden"}`}>{user.name}</h2>
+              <h2 className={`font-semibold text-[22px] text-center leading-6 duration-300 ${!open && "scale-0 hidden"}`}>{user?.name}</h2>
             </div>
 
             <div className='flex flex-col gap-4 py-4 font-medium'>
-              <Tooltip content="Moje okazje" size='lg' isDisabled={open} placement='right' closeDelay={0}>
+              <Tooltip content="Statystyki" size='lg' isDisabled={open} placement='right' closeDelay={0}>
                 <div 
                 onClick={() => router.push('/moje-okazje')} 
                 className={`${pathname == '/moje-okazje' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
-                  <BsWindowStack size={24}/>
-                  <p className={`${!open && "scale-0 hidden"}`}>Moje Okazje</p>
+                  <BsBarChartLineFill size={24}/>
+                  <p className={`${!open && "scale-0 hidden"}`}>Statystyki</p>
                 </div>
               </Tooltip>
 
-              <Tooltip content="Moje Odznaki" size='lg' isDisabled={open} placement='right' closeDelay={0}>
+              <Tooltip content="Kategorie" size='lg' isDisabled={open} placement='right' closeDelay={0}>
               <div className={`${pathname == '/moje-odznaki' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
-                <BsBookmarkStarFill size={24}/>
-                <p className={`${!open && "scale-0 hidden"}`}>Moje Odznaki</p>
+                <BsFillStarFill size={24}/>
+                <p className={`${!open && "scale-0 hidden"}`}>Kategorie</p>
+              </div>
+              </Tooltip>
+
+              <Tooltip content="Dodaj Kategorię" size='lg' isDisabled={open} placement='right' closeDelay={0}>
+              <div className={`${pathname == '/moje-odznaki' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
+                <BsFillPlusCircleFill  size={24}/>
+                <p className={`${!open && "scale-0 hidden"}`}>Dodaj Kategorię</p>
               </div>
               </Tooltip>
             </div>
@@ -67,4 +73,4 @@ const Sidebar = ({children}) => {
   )
 }
 
-export default Sidebar
+export default AdminSidebar
