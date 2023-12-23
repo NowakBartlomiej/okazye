@@ -32,15 +32,17 @@ const AdminSidebar = ({children}) => {
             <div className='flex flex-col gap-4 py-4 font-medium'>
               <Tooltip content="Statystyki" size='lg' isDisabled={open} placement='right' closeDelay={0}>
                 <div 
-                onClick={() => router.push('/moje-okazje')} 
-                className={`${pathname == '/moje-okazje' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
+                onClick={() => router.push('/admin/statystyki')} 
+                className={`${pathname == '/admin/statystyki' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
                   <BsBarChartLineFill size={24}/>
                   <p className={`${!open && "scale-0 hidden"}`}>Statystyki</p>
                 </div>
               </Tooltip>
 
               <Tooltip content="Kategorie" size='lg' isDisabled={open} placement='right' closeDelay={0}>
-              <div className={`${pathname == '/moje-odznaki' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
+              <div 
+              onClick={() => router.push('/admin/kategorie')} 
+              className={`${pathname == '/admin/kategorie' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
                 <BsFillStarFill size={24}/>
                 <p className={`${!open && "scale-0 hidden"}`}>Kategorie</p>
               </div>
