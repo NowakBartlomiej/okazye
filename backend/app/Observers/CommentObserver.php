@@ -15,7 +15,7 @@ class CommentObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $comment->user_id],
-            ['comments-created' => Comment::where('user_id', $comment->user_id)->get()->count()]
+            ['comments_created' => Comment::where('user_id', $comment->user_id)->get()->count()]
         );
 
         Stat::updateOrCreate(
@@ -31,7 +31,7 @@ class CommentObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $comment->user_id],
-            ['comments-created' => Comment::where('user_id', $comment->user_id)->get()->count()]
+            ['comments_created' => Comment::where('user_id', $comment->user_id)->get()->count()]
         );
 
         Stat::updateOrCreate(
@@ -47,7 +47,7 @@ class CommentObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $comment->user_id],
-            ['comments-created' => Comment::where('user_id', $comment->user_id)->get()->count()]
+            ['comments_created' => Comment::where('user_id', $comment->user_id)->get()->count()]
         );
 
         Stat::updateOrCreate(
@@ -71,7 +71,7 @@ class CommentObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $comment->user_id],
-            ['comments-created' => Comment::where('user_id', $comment->user_id)->get()->count()]
+            ['comments_created' => Comment::where('user_id', $comment->user_id)->get()->count()]
         );
 
         Stat::updateOrCreate(

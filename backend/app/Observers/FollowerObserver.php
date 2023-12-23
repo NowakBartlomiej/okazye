@@ -14,7 +14,7 @@ class FollowerObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $follower->user_id],
-            ['users-followers' => Follower::where('user_id', $follower->user_id)->get()->count()]
+            ['users_followers' => Follower::where('user_id', $follower->user_id)->get()->count()]
         );
     }
 
@@ -25,7 +25,7 @@ class FollowerObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $follower->user_id],
-            ['users-followers' => Follower::where('user_id', $follower->user_id)->get()->count()]
+            ['users_followers' => Follower::where('user_id', $follower->user_id)->get()->count()]
         );
     }
 
@@ -36,7 +36,7 @@ class FollowerObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $follower->user_id],
-            ['users-followers' => Follower::where('user_id', $follower->user_id)->get()->count()]
+            ['users_followers' => Follower::where('user_id', $follower->user_id)->get()->count()]
         );
     }
 
@@ -55,7 +55,7 @@ class FollowerObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $follower->user_id],
-            ['users-followers' => Follower::where('user_id', $follower->user_id)->get()->count()]
+            ['users_followers' => Follower::where('user_id', $follower->user_id)->get()->count()]
         );
     }
 }

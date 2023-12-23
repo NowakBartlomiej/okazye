@@ -8,6 +8,7 @@ use App\Http\Controllers\api\OccasionController;
 use App\Http\Controllers\api\RatingController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\StatController;
+use App\Http\Controllers\api\UserBadgeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,4 +54,6 @@ Route::get('/has-admin-role', [RoleController::class, 'hasAdminRole']);
 Route::get('/has-moderator-role', [RoleController::class, 'hasModeratorRole']);
 
 Route::apiResource('/stats', StatController::class)->only('index');
+
+Route::get('/user-badges', [UserBadgeController::class, 'index']);
 

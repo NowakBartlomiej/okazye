@@ -16,7 +16,7 @@ class OccasionObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $occasion->user_id],
-            ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+            ['occasions_created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
         );
 
         Stat::updateOrCreate(
@@ -32,7 +32,7 @@ class OccasionObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $occasion->user_id],
-            ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+            ['occasions_created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
         );
 
         Stat::updateOrCreate(
@@ -48,7 +48,7 @@ class OccasionObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $occasion->user_id],
-            ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+            ['occasions_created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
         );
 
         Stat::updateOrCreate(
@@ -72,7 +72,7 @@ class OccasionObserver
     {
         UserStat::updateOrCreate(
             ['user_id' => $occasion->user_id],
-            ['occasions-created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
+            ['occasions_created' => Occasion::where('user_id', $occasion->user_id)->get()->count()]
         );
 
         Stat::updateOrCreate(
