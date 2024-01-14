@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryUserResource;
 use App\Models\Category;
@@ -67,15 +68,17 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $storeCategoryRequest)
     {
+        $data = $storeCategoryRequest->validated();
+
+        
+
         try {
-            Category::create([
-                'name' => $request->name,
-            ]);
+            $category = Category::create($data);
 
             return response()->json([
-                'message' => "Dodano kategorię: " . $request->name 
+                'message' => "Dodano kategorię: " . $storeCategoryRequest->name 
             ],200);
         } catch(Exception $e) {
             return response()->json([

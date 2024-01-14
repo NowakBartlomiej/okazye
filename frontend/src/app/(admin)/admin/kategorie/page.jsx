@@ -1,8 +1,11 @@
+import CategoryView from '@/components/categoryView'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>Kategorie</div>
+    <main>
+      <CategoryView />
+    </main>
   )
 }
 

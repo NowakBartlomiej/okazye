@@ -10,10 +10,10 @@ class UserStat extends Model
     use HasFactory;
 
     protected $fillable = [
-        'occasions-created',
-        'occasions-rated',
-        'comments-created',
-        'users-followers',
-        'user-occasion-rate'
+        'occasions_created',
+        'occasions_rated',
+        'comments_created',
+        'users_followers',
+        'user_occasion_rate'
     ];
 }

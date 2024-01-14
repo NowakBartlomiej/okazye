@@ -11,6 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class UserBadgeController extends Controller
 {
     public function index() {
-        return UserBadgeResource::collection(UserStat::where('user_id', Auth::user()->id)->get());
+        return UserBadgeResource::collection(UserStat::where('user_id', 1)->get());
     }
 }

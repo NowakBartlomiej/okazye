@@ -1,5 +1,7 @@
 import fetchAxios from "@/lib/fetchAxios"
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export const getCategories = () => {
     return useQuery({
@@ -30,5 +32,50 @@ export const getCategory = (categoryId) => {
         },
         refetchOnWindowFocus: false,
         
+    })
+}
+
+export const createCategory = (category) => {
+    const queryClient = useQueryClient();
+    const router = useRouter();
+
+    return useMutation({
+        mutationFn: async (category) => {
+            await fetchAxios.post('/categories', category)
+            .then((response) => {
+                toast(response.data.message, {
+                    type: 'success',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                return response
+            })
+            .catch((error) => {
+                toast("Niepoprawne dane", {
+                    type: 'error',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                
+                console.log(error)
+                throw error
+            })
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['categories']);
+            router.back();
+        }
     })
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Events\RatingCreated;
+use App\Events\RatingUpdated;
 use App\Http\Controllers\Controller;
+use App\Models\Occasion;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,45 +20,61 @@ class RatingController extends Controller
         ]);
 
         $rating = DB::table('occasion_user')
-            ->where('occasion_id', $request->occasionId)
-            ->where('user_id', Auth::user()->id)
-            ->first();
-
-        if (!$rating) {
-            $value =  DB::table('occasion_user')->insert([
-                'occasion_id' => $request->occasionId,
-                'user_id' => Auth::user()->id,
-                'rating' => $request->rating,
-            ]);
-            
-            if ($value) {
-                return response()->json([
-                    'message' => 'Oceniono okazję'
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'Coś poszło nie tak'
-                ], 500);
-            }
-        } else {
-            try {
-                DB::table('occasion_user')
                 ->where('occasion_id', $request->occasionId)
                 ->where('user_id', Auth::user()->id)
-                ->update([
-                    'rating' => $request->rating
+                ->first();
+        
+        return DB::transaction(function() use ($rating, $request) {
+            if (!$rating) {
+                $value =  DB::table('occasion_user')->insert([
+                    'occasion_id' => $request->occasionId,
+                    'user_id' => Auth::user()->id,
+                    'rating' => $request->rating,
                 ]);
+                
+                if ($value) {
+                    RatingCreated::dispatch(
+                        Auth::user(), 
+                        Occasion::find($request->occasionId),
+                        $request->rating
+                    );
+                    
+                    
 
-                return response()->json([
-                    'message' => 'Oceniono okazję'
-                ], 200);
+                    return response()->json([
+                        'message' => 'Oceniono okazję'
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'message' => 'Coś poszło nie tak'
+                    ], 500);
+                }
+            } else {
+                try {
+                    DB::table('occasion_user')
+                    ->where('occasion_id', $request->occasionId)
+                    ->where('user_id', Auth::user()->id)
+                    ->update([
+                        'rating' => $request->rating
+                    ]);
+    
+                    RatingUpdated::dispatch(
+                        Auth::user(), 
+                        Occasion::find($request->occasionId),
+                        $request->rating
+                    );
 
-            } catch(Error $e) {
-                return response()->json([
-                    'message' => 'Coś poszło nie tak'
-                ], 500);
+                    return response()->json([
+                        'message' => 'Oceniono okazję'
+                    ], 200);
+    
+                } catch(Error $e) {
+                    return response()->json([
+                        'message' => 'Coś poszło nie tak'
+                    ], 500);
+                }
             }
-        }
+        });
             
     }
 }

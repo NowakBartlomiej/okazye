@@ -2,18 +2,22 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use App\Models\Comment;
 use App\Models\Follower;
 use App\Models\Occasion;
-use App\Models\User;
+use App\Events\RatingCreated;
+use App\Events\RatingUpdated;
+use App\Observers\UserObserver;
 use App\Observers\CommentObserver;
 use App\Observers\FollowerObserver;
 use App\Observers\OccasionObserver;
-use App\Observers\UserObserver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\UpdateOccasionsRatedUserStat;
+use App\Listeners\UpdateUserOccasionRateUserStat;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,6 +29,13 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        RatingCreated::class => [
+            UpdateOccasionsRatedUserStat::class,
+            UpdateUserOccasionRateUserStat::class,
+        ],
+        RatingUpdated::class => [
+            UpdateUserOccasionRateUserStat::class,
         ],
     ];
 

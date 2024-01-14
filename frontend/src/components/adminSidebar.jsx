@@ -49,7 +49,9 @@ const AdminSidebar = ({children}) => {
               </Tooltip>
 
               <Tooltip content="Dodaj Kategorię" size='lg' isDisabled={open} placement='right' closeDelay={0}>
-              <div className={`${pathname == '/moje-odznaki' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
+              <div 
+              onClick={() => router.push('/admin/kategorie/dodaj') }
+              className={`${pathname == '/admin/kategorie/dodaj' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
                 <BsFillPlusCircleFill  size={24}/>
                 <p className={`${!open && "scale-0 hidden"}`}>Dodaj Kategorię</p>
               </div>
