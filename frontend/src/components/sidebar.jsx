@@ -41,7 +41,9 @@ const Sidebar = ({children}) => {
               </Tooltip>
 
               <Tooltip content="Moje Odznaki" size='lg' isDisabled={open} placement='right' closeDelay={0}>
-              <div className={`${pathname == '/moje-odznaki' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
+              <div 
+              onClick={() => router.push('/moje-odznaki')}
+              className={`${pathname == '/moje-odznaki' && 'text-white bg-custom-green-100'} cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 py-2 hover:bg-custom-green-100 hover:text-white rounded-lg transition-colors`}>
                 <BsBookmarkStarFill size={24}/>
                 <p className={`${!open && "scale-0 hidden"}`}>Moje Odznaki</p>
               </div>

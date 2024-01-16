@@ -57,27 +57,32 @@ class UserBadgeResource extends JsonResource
         }
 
         return [
-            'occasionsCreated' => [
+            [
+                'name' => 'Ilość dodanych okazji',
                 'count' => $this->occasions_created,
                 'hasBadges' => $hasBadges['occasions-created'],
-                'criterion' => $criterion['occasions-created']
+                'criterion' => $criterion['occasions-created'],
             ],
-            'occasionsRated' => [
+            [
+                'name' => 'Ilość ocenionych okazji',
                 'count' => $this->occasions_rated,
                 'hasBadges' => $hasBadges['occasions-rated'],
                 'criterion' => $criterion['occasions-rated']
             ],
-            'commentsCreated' => [
+            [
+                'name' => 'Ilość dodanych komentarzy',
                 'count' => $this->comments_created,
                 'hasBadges' => $hasBadges['comments-created'],
                 'criterion' => $criterion['comments-created']
             ],
-            'usersFollowers' => [
+            [
+                'name' => 'Liczba obserwatorów',
                 'count' => $this->users_followers,
                 'hasBadges' => $hasBadges['users-followers'],
                 'criterion' => $criterion['users-followers']
             ],
-            'userOccasionRate' => [
+            [
+                'name' => 'Najwyższa ocena okazji',
                 'count' => $this->user_occasion_rate,
                 'hasBadges' => $hasBadges['user-occasion-rate'],
                 'criterion' => $criterion['user-occasion-rate']
