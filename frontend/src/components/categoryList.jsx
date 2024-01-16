@@ -16,7 +16,7 @@ const CategoryList = ({actualCategoryId}) => {
         <aside className='lg:sticky lg:top-[9.2rem] p-3 rounded-2xl bg-white mx-3 sm:mx-5 md:mx-8 lg:mx-2'>
 
             <h2 className='text-custom-green-600 text-xl font-semibold mb-3'>Kategorie</h2>
-            <ul className=' grid grid-cols-2 gap-3 sm:grid-cols-3  lg:flex lg:flex-col'>
+            <ul className=' grid grid-cols-2 gap-3 sm:grid-cols-3  lg:flex lg:flex-col overflow-y-auto h-[500px]'>
                 {categoriesLoading
                     ? (
 
