@@ -7,7 +7,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 
 const AdminSidebar = ({children}) => {
-    const {user} = useAuth();
+    const {user, logout} = useAuth();
     const [open, setOpen] = useState(true);
     const router = useRouter();
     const pathname = usePathname();
@@ -63,7 +63,7 @@ const AdminSidebar = ({children}) => {
           <Tooltip content="Wyloguj się" size='lg' isDisabled={open} placement='right' closeDelay={0}>
             <div className='cursor-pointer flex items-center gap-4 text-custom-gray-100 text-xl px-2.5 rounded-lg hover:text-custom-green-100 transition-colors'>
               <BsBoxArrowLeft size={24} />
-              <p className={`${!open && "scale-0 hidden"}`}>Wyloguj się</p>
+              <p onClick={logout} className={`${!open && "scale-0 hidden"}`}>Wyloguj się</p>
             </div>
             </Tooltip>
           </div>
