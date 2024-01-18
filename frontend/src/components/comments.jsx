@@ -23,6 +23,7 @@ const Comments = ({occasionId}) => {
                 {comments && comments.map((comment, index) => (
                     <Comment 
                         key={comment.id}
+                        commentId={comment.id}
                         content={comment.content}
                         createdAt={comment.createdAt}
                         userName={comment.user.name}

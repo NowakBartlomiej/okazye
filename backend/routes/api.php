@@ -60,3 +60,5 @@ Route::get('/user-badges', [UserBadgeController::class, 'index']);
 
 Route::get('/search/{searchInput}', [SearchController::class, 'search']);
 
+Route::get('/comments-ratings/{commentId}', [CommentRatingController::class, 'getCommentRatings']);
+

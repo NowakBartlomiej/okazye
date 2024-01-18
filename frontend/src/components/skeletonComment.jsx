@@ -4,7 +4,7 @@ import React from 'react'
 const SkeletonComment = ({ cards }) => {
     return (
         Array(cards).fill(0).map((_, index) =>
-            <div className='border-t-2 py-4 flex flex-col gap-4'>
+            <div key={index} className='border-t-2 py-4 flex flex-col gap-4'>
                 <div className='flex items-center gap-5'>
                     <Skeleton className="flex rounded-full w-14 h-14" />
                     <div className='flex flex-col gap-1'>
