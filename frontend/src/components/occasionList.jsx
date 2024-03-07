@@ -8,6 +8,7 @@ import SkeletonCard from './skeletonCard'
 import { useRouter } from 'next/navigation'
 import CategoryList from './categoryList'
 import { useAuth } from '@/hooks/useAuth'
+import UserList from './userList'
 
 const OccasionList = ({ occasionFilter }) => {
     const router = useRouter();
@@ -45,7 +46,7 @@ const OccasionList = ({ occasionFilter }) => {
                 <div className=' w-full lg:w-full grid lg:place-items-center'>
 
                     {isLoading && <SkeletonCard cards={1} />}
-
+                    {occasions?.length == 0 && <h1>Brak wyników</h1>}
                     <InfiniteScroll
                         dataLength={occasions ? occasions.length : 0}
                         next={() => fetchNextPage()}
@@ -76,7 +77,10 @@ const OccasionList = ({ occasionFilter }) => {
 
                 </div>
                 <div className='lg:w-1/4 mb-6 border-b-3 border-gray-200 pb-4 lg:pb-0 lg:border-0'>
-                    <CategoryList />
+                    
+                    {occasionFilter == "followed-occasions" 
+                    ? <UserList/>
+                    : <CategoryList />}
                 </div>
             </div>
         </div>

@@ -1,23 +1,26 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Card, CardBody, Image, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, useDisclosure } from "@nextui-org/react";
-import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill, BsPencilSquare, BsFillTrashFill } from 'react-icons/bs'
+import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill, BsPencilSquare, BsFillTrashFill, BsStarFill } from 'react-icons/bs'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth';
-import { followUnfollowUser, getFollowers } from '@/app/api/followUser';
-import { followUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
+import { useFollowUnfollowUser, getFollowers } from '@/app/api/followUser';
+import { useFollowUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
 import DeleteModal from './deleteModal';
 import { rateOccasion } from '@/app/api/fetchRating';
+import { hasModeratorRole } from '@/app/api/fetchRoles';
 
 const OccassionCard = ({ occasionId, title, description, categoryName, newPrice, oldPrice, rating, url, userName, userId, categoryId, image }) => {
     const router = useRouter()
     const { user } = useAuth();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const {data: isModerator, isLoading: mIsLoading} = hasModeratorRole();
 
     const { data: followers, isLoading, refetch } = getFollowers();
     const { data: categoryFollowers, isLoading: categoryIsLoading, refetch: categoryRefetch } = getCategoryFollowers();
     const {mutate: rate, error} = rateOccasion();
-
+    const {mutate: followUnfollowCategory} = useFollowUnfollowCategory();
+    const {mutate: followUnfollowUser} = useFollowUnfollowUser();
 
 
     return (
@@ -30,7 +33,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                     shadow="sm"
                 >
                     <CardBody>
-                        {user?.id == userId && (
+                        {(user?.id == userId || isModerator) && (
                             <div className='flex  w-fit gap-3 mb-4'>
                                 <Button
                                     onClick={(e) => {
@@ -177,7 +180,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
 
                                 <div className='bg-custom-light-gray-200 text-black text-base font-medium flex justify-between items-center px-3 py-2 rounded-xl'>
                                     <div className='flex gap-1 items-center'>
-                                        <BsFillHouseDoorFill size={20} />
+                                        <BsStarFill size={20} />
                                         <p>{categoryName}</p>
                                     </div>
                                     {user && (

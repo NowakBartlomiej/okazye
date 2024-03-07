@@ -15,3 +15,18 @@ export const hasAdminRole = () => {
         }
     })
 }
+
+export const hasModeratorRole = () => {
+    return useQuery({
+        queryKey: ['hasModeratorRole'],
+        queryFn: async () => {
+            const result = await fetchAxios
+                .get('/has-moderator-role')
+                .catch((error) => {
+                    throw new Error(error)
+                });
+            
+            return result.data.hasRole;
+        }
+    })
+}

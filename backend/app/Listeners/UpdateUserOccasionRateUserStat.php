@@ -23,16 +23,11 @@ class UpdateUserOccasionRateUserStat
         ->select('occasion_user.occasion_id', 
             DB::raw('SUM(occasion_user.rating) as sum')
         )
-       
             ->groupBy('occasion_user.occasion_id')
-            
             ->get();
 
         $max = $data->max('sum');     
 
-        \Log::debug(print_r($data, true));
-        \Log::debug(print_r($max, true));
-        
         UserStat::updateOrCreate(
             ['user_id' => $event->occasion->user_id],
             ['user_occasion_rate' => $max]

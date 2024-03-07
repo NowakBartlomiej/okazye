@@ -1,20 +1,10 @@
 import Navigation from '@/components/navigation'
 import Sidebar from '@/components/sidebar'
 import React from 'react'
+import { redirect } from 'next/navigation'
 
 const Page = () => {
-  return (
-    <>
-      <Navigation />
-      <Sidebar>
-        <div className='lg:w-[70%] lg:mx-auto'>
-          <div className='grid lg:place-items-center'>
-            Karty
-          </div>
-        </div>
-      </Sidebar>
-    </>
-  )
+  return redirect('/moje-okazje')
 }
 
 export default Page

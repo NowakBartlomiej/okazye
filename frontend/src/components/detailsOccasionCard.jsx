@@ -1,16 +1,18 @@
 import React from 'react'
 import { Card, CardBody, Image, Button, Avatar } from "@nextui-org/react";
-import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
+import { BsPlusCircleFill, BsFillDashCircleFill, BsBoxArrowUpRight, BsFillHouseDoorFill, BsEyeFill, BsFillEyeSlashFill, BsStarFill } from 'react-icons/bs'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth';
-import { getFollowers, followUnfollowUser } from '@/app/api/followUser';
-import { followUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
+import { getFollowers, useFollowUnfollowUser } from '@/app/api/followUser';
+import { useFollowUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
 
 const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, url, userName, userId, categoryId, image }) => {
     const { user } = useAuth();
 
-    const { data: followers, isLoading, refetch } = getFollowers();
-    const { data: categoryFollowers, isLoading: categoryIsLoading, refetch: categoryRefetch } = getCategoryFollowers();
+    const {mutate: followUnfollowCategory} = useFollowUnfollowCategory();
+    const { data: followers, isLoading } = getFollowers();
+    const { data: categoryFollowers, isLoading: categoryIsLoading } = getCategoryFollowers();
+    const {mutate: followUnfollowUser} = useFollowUnfollowUser()
 
     return (
         <Card
@@ -104,7 +106,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     followUnfollowUser({ userId: userId })
-                                                    refetch()
+                                                    
                                                 }} size={20} />
                                             :
                                             <BsEyeFill
@@ -112,7 +114,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     followUnfollowUser({ userId: userId })
-                                                    refetch()
+                                                    
                                                 }} size={20} />
                                     )
                                 )}
@@ -126,7 +128,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                     <div className='flex mt-4'>
                         <div className='bg-custom-light-gray-200 w-48 text-black text-base font-medium flex justify-between items-center px-3 py-2 rounded-xl'>
                             <div className='flex gap-1 items-center'>
-                                <BsFillHouseDoorFill size={20} />
+                                <BsStarFill size={20} />
                                 <p>{categoryName}</p>
                             </div>
                             {user && (
@@ -138,7 +140,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 followUnfollowCategory({ categoryId: categoryId })
-                                                categoryRefetch()
+                                                
                                             }} size={20} />
                                         :
                                         <BsEyeFill
@@ -146,7 +148,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 followUnfollowCategory({ categoryId: categoryId })
-                                                categoryRefetch()
+                                                
                                             }} size={20} />
                                 )
                             )}

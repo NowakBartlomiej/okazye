@@ -10,6 +10,7 @@ use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\SearchController;
 use App\Http\Controllers\api\StatController;
 use App\Http\Controllers\api\UserBadgeController;
+use App\Models\Occasion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,7 @@ Route::apiResource('/categories', CategoryController::class);
 
 Route::post('/follow-unfollow-user', [FollowerController::class, 'followUnfollow']);
 Route::get('/followers', [FollowerController::class, 'index']);
+Route::get('/get-followers', [FollowerController::class, 'followers']);
 
 Route::post('/follow-unfollow-category', [CategoryController::class, 'followUnfollowCategory']);
 Route::get('/followed-categories', [CategoryController::class, 'followedCategories']);
@@ -58,7 +60,14 @@ Route::apiResource('/stats', StatController::class)->only('index');
 
 Route::get('/user-badges', [UserBadgeController::class, 'index']);
 
-Route::get('/search/{searchInput}', [SearchController::class, 'search']);
+Route::get('/search-occasions/{searchInput}', [SearchController::class, 'searchOccasions']);
+
+Route::get('/search-categories/{searchInput}', [SearchController::class, 'searchCategories']);
+
+Route::get('/search-users/{searchInput}', [SearchController::class, 'searchUsers']);
 
 Route::get('/comments-ratings/{commentId}', [CommentRatingController::class, 'getCommentRatings']);
+
+Route::get('/suggested-occasions/{categoryId}', [OccasionController::class, 'randomOccasionsFromCategory']);
+
 

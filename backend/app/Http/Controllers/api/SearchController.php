@@ -13,15 +13,22 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function search($searchInput) {
-        $occasions = Occasion::where('title', 'like', '%' . $searchInput . '%')->get();
-        $categories = Category::where('name', 'like', '%' . $searchInput . '%')->get();
-        $users = User::where('name', 'like', '%' . $searchInput . '%')->get();
+    public function searchOccasions($searchInput) {
+        $occasions = Occasion::where('title', 'like', '%' . $searchInput . '%')->paginate(5);
 
-        return [
-            'occasions' => OccasionResource::collection($occasions),
-            'categories' => CategoryResource::collection($categories),
-            'users' => UserResource::collection($users),
-        ];
+        return OccasionResource::collection($occasions);
     }
+
+    public function searchCategories($searchInput) {
+        $categories = Category::where('name', 'like', '%' . $searchInput . '%')->paginate(5);
+
+        return CategoryResource::collection($categories);
+    }
+
+    public function searchUsers($searchInput) {
+        $users = User::where('name', 'like', '%' . $searchInput . '%')->paginate(5);
+
+        return UserResource::collection($users);
+    }
+    
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { getOccasion } from '@/app/api/fetchOccasions'
+import { getOccasion, getSuggestedOccasions } from '@/app/api/fetchOccasions'
 import DetailsOccasionCard from '@/components/detailsOccasionCard';
 import { Card, CardBody, Skeleton } from '@nextui-org/react';
 import MiniOccasionCard from '@/components/miniOccasionCard';
@@ -10,9 +10,11 @@ import Comment from '@/components/comment';
 import SkeletonDetailsOccasionCard from '@/components/skeletonDetailsOccasionCard';
 import { useAuth } from '@/hooks/useAuth';
 import Comments from '@/components/comments';
+import SkeletonMiniOccasionCard from '@/components/skeletonMiniOccasionCard';
 
 const Page = ({ params }) => {
     const { data, isFetching } = getOccasion(params.id);
+    const {data: suggested, isFetching: isFetchingSuggest} = getSuggestedOccasions(data?.category.id);
     const {user} = useAuth();
     
     return (
@@ -67,9 +69,18 @@ const Page = ({ params }) => {
                     <CardBody className='flex gap-4'>
                         <h2 className='text-3xl font-bold'>Sprawdź też</h2>
                         <div className='grid place-items-center gap-8 sm:flex sm:justify-around'>
-                            <MiniOccasionCard />
-                            <MiniOccasionCard />
-                            <MiniOccasionCard />
+                            {isFetchingSuggest && <SkeletonMiniOccasionCard />}
+                            {!isFetchingSuggest && (suggested?.data.map((s, index) => (
+                                <MiniOccasionCard 
+                                    id={s.id}
+                                    image={s.image}
+                                    lowestPrice={s.newPrice}
+                                    rating={s.rating}
+                                    title={s.title}
+                                    key={s.id}
+                                />
+                            )))}
+                            
                         </div>
                     </CardBody>
                 </Card>

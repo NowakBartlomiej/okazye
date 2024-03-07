@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Stat;
 use App\Models\User;
+use App\Models\UserStat;
 
 class UserObserver
 {
@@ -18,6 +19,11 @@ class UserObserver
             ['id' => 1],
             ['users_count' => User::count()]
         );
+        
+        UserStat::updateOrCreate(
+            ['user_id' => $user->id],
+            ['user_id' => $user->id]
+        );
     }
 
     /**
@@ -31,6 +37,11 @@ class UserObserver
             ['id' => 1],
             ['users_count' => User::count()]
         );
+
+        UserStat::updateOrCreate(
+            ['user_id' => $user->id],
+            ['user_id' => $user->id]
+        );
     }
 
     /**
@@ -43,6 +54,11 @@ class UserObserver
         Stat::updateOrCreate(
             ['id' => 1],
             ['users_count' => User::count()]
+        );
+
+        UserStat::updateOrCreate(
+            ['user_id' => $user->id],
+            ['user_id' => $user->id]
         );
     }
 
@@ -64,6 +80,11 @@ class UserObserver
         Stat::updateOrCreate(
             ['id' => 1],
             ['users_count' => User::count()]
+        );
+
+        UserStat::updateOrCreate(
+            ['user_id' => $user->id],
+            ['user_id' => $user->id]
         );
     }
 }

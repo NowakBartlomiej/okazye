@@ -16,7 +16,7 @@ class RoleController extends Controller
 
     public function hasModeratorRole() {
         return response()->json([
-            'hasRole' => Auth::user()->hasRole('admin', 'moderator')
+            'hasRole' => Auth::user()->hasRole(['admin', 'moderator'])
         ], 201);
     }
 

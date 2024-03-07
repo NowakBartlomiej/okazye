@@ -150,7 +150,7 @@ export const deleteOccasion = (occasionId) => {
 
 export const getOccasion = (occasionId) => {
     return useQuery({
-        queryKey: ['occasion'],
+        queryKey: ['occasion', occasionId],
         queryFn: async () => {
             const result = await fetchAxios
                 .get(`occasions/${occasionId}`)
@@ -228,5 +228,21 @@ export const getOccasionsByCategory = (categoryId) => {
         refetchOnMount: false,
         staleTime: 2 * (60 * 1000),
         getNextPageParam: (lastPage) => (lastPage.links.next == null ? undefined : lastPage.meta.current_page + 1)
+    })
+}
+
+export const getSuggestedOccasions = (categoryId) => {
+    return useQuery({
+        queryKey: ['suggestedOccasions', categoryId],
+        queryFn: async () => {
+            const result = await fetchAxios
+                .get(`suggested-occasions/${categoryId}`)
+                .catch((error) => {
+                    throw new Error(error);
+                });
+
+            return result.data;
+        },
+        enabled: !!categoryId
     })
 }

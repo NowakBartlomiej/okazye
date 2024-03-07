@@ -28,6 +28,7 @@ class UserSeeder extends Seeder
         $admin->assignRole('admin');
 
         Role::create(['name' => 'moderator']);
+        
         $moderator = User::firstOrCreate([
             'id' => 2,
             'name' => 'Moderator',

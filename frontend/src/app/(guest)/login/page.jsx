@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/hooks/useAuth";
 import { Button, Input } from "@nextui-org/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation"
 import { useState } from "react";
 
@@ -50,7 +51,7 @@ const Page = () => {
           <div>
             <div className="flex justify-end">
               <div className="text-sm">
-                <a href="#" className="font-semibold text-[#28B67E] hover:text-[#28b67dd2]">Zapomiałeś hasła?</a>
+                <Link href={'zapomnialem-hasla'} className="font-semibold text-[#28B67E] hover:text-[#28b67dd2]">Zapomiałeś hasła?</Link>
               </div>
             </div>
             <div className="mt-2">

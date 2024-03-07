@@ -55,10 +55,16 @@ class OccasionController extends Controller
 
     public function followedOccasions()
     {
-        $users = DB::table("followers")->where('follower_id', 11)->pluck('user_id')->toArray();
+        $users = DB::table("followers")->where('follower_id', Auth::user()->id)->pluck('user_id')->toArray();
         $occasion = Occasion::whereIn('user_id', $users)->latest()->paginate(5);
 
         return OccasionResource::collection($occasion);
+    }
+
+    public function randomOccasionsFromCategory($categoryId) {
+        $occasions = Occasion::where('category_id', $categoryId)->inRandomOrder()->limit(3)->get();
+
+        return OccasionResource::collection($occasions);
     }
 
     /**

@@ -1,14 +1,15 @@
 import { getCategories } from '@/app/api/fetchCategories';
-import { BsFillPlugFill, BsEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'
+import { BsFillPlugFill, BsEyeFill, BsFillEyeSlashFill, BsStarFill  } from 'react-icons/bs'
 import { Skeleton } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useAuth } from '@/hooks/useAuth';
-import { followUnfollowCategory, getCategoryFollowers } from '@/app/api/followCategory';
+import { getCategoryFollowers, useFollowUnfollowCategory } from '@/app/api/followCategory';
 
 const CategoryList = ({actualCategoryId}) => {
     const router = useRouter();
     const {user} = useAuth();
+    const {mutate: followUnfollowCategory} = useFollowUnfollowCategory();
     const { data: categories, isLoading: categoriesLoading } = getCategories();
     const {data: categoryFollowers, isLoading: categoryIsLoading, refetch: categoryRefetch} = getCategoryFollowers();
 
@@ -26,7 +27,7 @@ const CategoryList = ({actualCategoryId}) => {
                                     <BsFillPlugFill />
                                     <p>Kategoria</p>
                                 </div>
-                                <BsEyeFill />
+                                <BsStarFill />
                             </li>
                         </Skeleton>
 
@@ -35,7 +36,7 @@ const CategoryList = ({actualCategoryId}) => {
                         categories?.data.map((category) => (
                             <li onClick={() => router.push(`/kategoria/${category.id}`)} key={category.id} className={`${actualCategoryId == category.id ? 'bg-custom-green-100 text-white' : 'bg-custom-light-gray-200 text-custom-green-600'} hover:bg-custom-green-100 hover:text-white transition-colors rounded-lg px-4 py-3 text-lg font-medium flex items-center justify-between gap-2 cursor-pointer`}>
                                 <div className='flex items-center gap-2'>
-                                    <BsFillPlugFill />
+                                    <BsStarFill />
                                     <p>{category.name}</p>
                                 </div>
                                 {user && (

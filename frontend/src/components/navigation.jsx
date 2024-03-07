@@ -3,12 +3,15 @@
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Input } from '@nextui-org/react'
-import { SearchIcon } from '@/icons/searchIcon';
+
 import { useState } from 'react'
+import SearchBar from './searchBar';
+import { hasAdminRole } from '@/app/api/fetchRoles'
 
 const Navigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const { user, logout } = useAuth({ middleware: 'guest' })
+    const {data: isAdmin} = hasAdminRole();
 
     return (
         <Navbar
@@ -32,18 +35,7 @@ const Navigation = () => {
             </NavbarContent>
 
             <NavbarContent as="div" className="items-center" justify="end">
-                <Input
-                    classNames={{
-                        base: "max-w-full sm:max-w-[10rem] h-10",
-                        mainWrapper: "h-full",
-                        input: "text-small",
-                        inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-                    }}
-                    placeholder="Type to search..."
-                    size="sm"
-                    startContent={<SearchIcon size={18} />}
-                    type="search"
-                />
+                <SearchBar />
 
                 {user ? (
                     <>
@@ -53,6 +45,9 @@ const Navigation = () => {
                         <Button className='bg-[#28B67E] text-white rounded hover:bg-[#28b67dd2]'>
                             <Link href='/profil'>Konto</Link>
                         </Button>
+                        {isAdmin && <Button className='bg-[#28B67E] text-white rounded hidden lg:flex hover:bg-[#28b67dd2]'>
+                            <Link href='/admin'>Admin</Link>
+                        </Button>}
                     </>
                 )
                     : (
@@ -78,13 +73,23 @@ const Navigation = () => {
                         <>
                         <NavbarMenuItem className='text-white'>
                             <Link
-                                className="w-full text-[#28B67E] hover:text-[#28b67dd2] focus:text-[#28b67dd2] transition-colors"
+                                className="w-full  hover:text-[#28b67dd2] focus:text-[#28b67dd2] transition-colors"
                                 href="/dodaj-okazje"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Dodaj Okazję
                             </Link>
                             </NavbarMenuItem>
+                            {isAdmin && <NavbarMenuItem className='text-white'>
+                            <Link
+                                className="w-full hover:text-[#28b67dd2] focus:text-[#28b67dd2] transition-colors"
+                                href="/admin"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Admin
+                            </Link>
+                            </NavbarMenuItem>}
+                            
                         </>
                         :
                         <>

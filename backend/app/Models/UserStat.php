@@ -14,6 +14,7 @@ class UserStat extends Model
         'occasions_rated',
         'comments_created',
         'users_followers',
-        'user_occasion_rate'
+        'user_occasion_rate',
+        'user_id'
     ];
 }
