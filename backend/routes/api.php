@@ -39,6 +39,7 @@ Route::get('/my-occasions', [OccasionController::class, 'myOccasions']);
 Route::get('/occasions-by-category/{categoryId}', [OccasionController::class, 'occasionsByCategory']);
 
 Route::apiResource('/categories', CategoryController::class);
+Route::apiResource('/categories', CategoryController::class)->only(['store', 'update', 'destroy'])->middleware(['auth:sanctum']);
 
 Route::post('/follow-unfollow-user', [FollowerController::class, 'followUnfollow']);
 Route::get('/followers', [FollowerController::class, 'index']);

@@ -116,7 +116,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                                                 </div>
                                             </div>
 
-                                            <small className='text-custom-light-gray-500 text-base'>Najniższa cena z 30 dni {newPrice} zł</small>
+                                            {/* <small className='text-custom-light-gray-500 text-base'>Najniższa cena z 30 dni {newPrice} zł</small> */}
                                         </>
                                     )
                                     }
@@ -129,7 +129,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                                                 </div>
                                             </div>
 
-                                            <small className='text-custom-light-gray-500 text-base'>Najniższa cena z 30 dni {newPrice} zł</small>
+                                            {/* <small className='text-custom-light-gray-500 text-base'>Najniższa cena z 30 dni {newPrice} zł</small> */}
                                         </>
                                     )
                                     }
@@ -151,7 +151,7 @@ const OccassionCard = ({ occasionId, title, description, categoryName, newPrice,
                                 </div>
 
                                 <DropdownMenu aria-label="Static Actions">
-                                    <DropdownItem key="profile">Profil</DropdownItem>
+                                    {/* <DropdownItem key="profile">Profil</DropdownItem> */}
                                     {user && (
                                         !isLoading && (
                                             followers.find(follower => follower.followerId == user.id && follower.userId == userId)

@@ -72,8 +72,6 @@ class CategoryController extends Controller
     {
         $data = $storeCategoryRequest->validated();
 
-        
-
         try {
             $category = Category::create($data);
 
@@ -85,6 +83,7 @@ class CategoryController extends Controller
                 'message' => "Coś poszło nie tak"
             ], 500);
         }
+        
     }
 
     /**

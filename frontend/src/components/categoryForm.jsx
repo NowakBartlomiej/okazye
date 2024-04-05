@@ -17,8 +17,7 @@ const CategoryForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(category)
-
+        
         addCategory(category);
     }
 

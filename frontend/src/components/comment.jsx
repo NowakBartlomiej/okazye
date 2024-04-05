@@ -1,18 +1,53 @@
 import { getCommentReactions, rateComment } from '@/app/api/fetchComments'
 import { useAuth } from '@/hooks/useAuth'
-import { Avatar } from '@nextui-org/react'
+import { Avatar, Button, useDisclosure } from '@nextui-org/react'
 import React, { useState } from 'react'
-import { BsStarFill, BsEmojiLaughingFill, BsFillHandThumbsUpFill, BsHeartFill } from 'react-icons/bs'
+import { BsStarFill, BsEmojiLaughingFill, BsFillHandThumbsUpFill, BsHeartFill, BsPencilSquare, BsFillTrashFill } from 'react-icons/bs'
 import { HiChatBubbleLeftRight } from 'react-icons/hi2'
+import { hasModeratorRole } from '@/app/api/fetchRoles';
+import DeleteCommentModal from './deleteCommentModal'
+import EditCommentModal from './editCommentModal'
 
-const Comment = ({ content, createdAt, userName, commentId }) => {
+const Comment = ({ content, createdAt, userName, commentId, userId }) => {
     const { user } = useAuth();
 
     const { data: ratings, refetch } = getCommentReactions(commentId);
     const { mutate: rate } = rateComment()
+    const { data: isModerator, isLoading: mIsLoading } = hasModeratorRole();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen: editIsOpen, onOpen: editOnOpen, onOpenChange: editOnOpenChange } = useDisclosure();
 
     return (
+        <>
+        <DeleteCommentModal commentId={commentId} isOpen={isOpen} onOpenChange={onOpenChange}/>
+        <EditCommentModal commentId={commentId} isOpen={editIsOpen} onOpenChange={editOnOpenChange} content={content}/>
         <div className='border-t-2 py-4 flex flex-col gap-4'>
+            {(user?.id == userId || isModerator) && (
+                <div className='flex  w-fit gap-3'>
+                    <Button
+                        onPress={editOnOpen}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                        className='text-lg bg-blue-400 text-white hover:bg-blue-300'
+                        startContent={<BsPencilSquare size={18} />}
+                    >
+                        Edytuj
+                    </Button>
+
+                    <Button
+                        onPress={onOpen}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                        className='text-lg bg-red-500 text-white hover:bg-red-400'
+                        startContent={<BsFillTrashFill size={18} />}
+                    >
+                        Usuń
+                    </Button>
+                </div>
+            )}
+
             <div className='flex items-center gap-5'>
                 <Avatar size='lg' className='border-4 border-custom-green-100' />
                 <div>
@@ -107,12 +142,13 @@ const Comment = ({ content, createdAt, userName, commentId }) => {
 
                 </div>
 
-                <div className='flex gap-3 items-center'>
+                {/* <div className='flex gap-3 items-center'>
                     <HiChatBubbleLeftRight size={20} />
                     <p>Odpowiedz</p>
-                </div>
+                </div> */}
             </div>
         </div>
+        </>
     )
 }
 

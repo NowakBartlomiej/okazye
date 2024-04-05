@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         Role::create(['name' => 'user']);
         
         Role::create(['name' => 'admin']);
-        $admin = User::firstOrCreate([
+        $admin = $admin = User::firstOrCreate([
             'id' => 1,
             'name' => 'Admin',
             'email' => 'admin@localhost',
@@ -37,5 +37,14 @@ class UserSeeder extends Seeder
         ]);
 
         $moderator->assignRole('moderator');
+
+        $test = $admin = User::firstOrCreate([
+            'id' => 3,
+            'name' => 'Test',
+            'email' => 'test@localhost',
+            'password' => Hash::make('12345678')
+        ]);
+
+        $test->assignRole('user');
     }
 }

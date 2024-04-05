@@ -28,7 +28,7 @@ export const getCategory = (categoryId) => {
                 throw new Error(error);
               });
         
-            return result.data;
+            return result.data.data;
         },
         refetchOnWindowFocus: false,
         
@@ -76,6 +76,92 @@ export const createCategory = (category) => {
         onSuccess: () => {
             queryClient.invalidateQueries(['categories']);
             router.back();
+        }
+    })
+}
+
+export const deleteCategory = (categoryId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (categoryId) => {
+            await fetchAxios.delete(`/categories/${categoryId}`)
+            .then((response) => {
+                toast(response.data.message, {
+                    type: 'success',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                return response
+            })
+            .catch((error) => {
+                toast("Niepoprawne dane", {
+                    type: 'error',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                console.log(error);
+            })
+        },
+        onSuccess: () => {
+            Promise.all([
+                queryClient.invalidateQueries(["categories"]),
+            ])
+        }
+    })
+}
+
+export const updateCategory = (category) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (category) => {
+            await fetchAxios.put(`/categories/${category.categoryId}`, category)
+            .then((response) => {
+                toast(response.data.message, {
+                    type: 'success',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                return response
+            })
+            .catch((error) => {
+                toast("Niepoprawne dane", {
+                    type: 'error',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                console.log(error);
+            })
+        },
+        onSuccess: () => {
+            Promise.all([
+                queryClient.invalidateQueries(["categories"]),
+            ])
         }
     })
 }

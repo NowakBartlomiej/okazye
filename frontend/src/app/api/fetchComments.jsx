@@ -1,5 +1,6 @@
 import fetchAxios from "@/lib/fetchAxios"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { comment } from "postcss";
 import { toast } from "react-toastify";
 
 export const getComments = (occasionId) => {
@@ -69,6 +70,103 @@ export const createComment = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["comments"])
+        }
+    })
+}
+
+export const deleteComment = (commentId) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (commentId) => {
+            await fetchAxios.delete(`/comments/${commentId}`)
+            .then((response) => {
+                toast(response.data.message, {
+                    type: 'success',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                return response
+            })
+            .catch((error) => {
+                toast("Niepoprawne dane", {
+                    type: 'error',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                console.log(error);
+            })
+        },
+        onSuccess: () => {
+            toast("Usunięto komentarz", {
+                type: 'success',
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            })
+            Promise.all([
+                queryClient.invalidateQueries(["comments"]),
+            ])
+        }
+    })
+}
+
+export const updateComment = (comment) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (comment) => {
+            await fetchAxios.put(`/comments/${comment.commentId}`, comment)
+            .then((response) => {
+                toast(response.data.message, {
+                    type: 'success',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                return response
+            })
+            .catch((error) => {
+                toast("Niepoprawne dane", {
+                    type: 'error',
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+                console.log(error);
+            })
+        },
+        onSuccess: () => {
+            Promise.all([
+                queryClient.invalidateQueries(["comments"]),
+            ])
         }
     })
 }

@@ -27,6 +27,7 @@ const Comments = ({occasionId}) => {
                         content={comment.content}
                         createdAt={comment.createdAt}
                         userName={comment.user.name}
+                        userId={comment.user.id}
                     />
                 ))}
             </>

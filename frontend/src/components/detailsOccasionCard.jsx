@@ -61,7 +61,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                         </div>
                                     </div>
 
-                                    <small className='text-custom-light-gray-500 text-lg'>Najniższa cena z 30 dni {newPrice} zł</small>
+                                    {/* <small className='text-custom-light-gray-500 text-lg'>Najniższa cena z 30 dni {newPrice} zł</small> */}
                                 </>
                             )}
                             {(newPrice && !oldPrice) && (
@@ -72,7 +72,7 @@ const DetailsOccasionCard = ({ title, categoryName, newPrice, oldPrice, rating, 
                                             </div>
                                         </div>
 
-                                        <small className='text-custom-light-gray-500 text-base'>Najniższa cena z 30 dni {newPrice} zł</small>
+                                        {/* <small className='text-custom-light-gray-500 text-base'>Najniższa cena z 30 dni {newPrice} zł</small> */}
                                     </>
                                 )
                                 }

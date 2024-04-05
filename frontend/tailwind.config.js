@@ -31,6 +31,9 @@ module.exports = {
           300: '#E9EAED',
           400: '#D9D9D9',
           500: '#BCBCBC',
+        },
+        'custom-hover-green': {
+          100: "#28b67dd2"
         }
       },
       keyframes: {
